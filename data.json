@@ -1,0 +1,2361 @@
+{
+  "generated": "2026-04-15T15:19:13.705446+00:00",
+  "period_days": 30,
+  "summary": {
+    "total_skills": 97,
+    "used_count": 32,
+    "total_executions": 96,
+    "top_skill": {
+      "name": "session-wrap:wrap",
+      "count": 14
+    }
+  },
+  "categories": [
+    {
+      "id": "knowledge",
+      "label": "Knowledge",
+      "color": "#5E6AD2",
+      "count": 10,
+      "execution_count": 27
+    },
+    {
+      "id": "workflow",
+      "label": "Workflow",
+      "color": "#E5793A",
+      "count": 5,
+      "execution_count": 16
+    },
+    {
+      "id": "superpowers",
+      "label": "Superpowers",
+      "color": "#D95F8C",
+      "count": 14,
+      "execution_count": 14
+    },
+    {
+      "id": "productivity",
+      "label": "Productivity",
+      "color": "#4EA87E",
+      "count": 9,
+      "execution_count": 11
+    },
+    {
+      "id": "media",
+      "label": "Media",
+      "color": "#C084FC",
+      "count": 2,
+      "execution_count": 8
+    },
+    {
+      "id": "omc",
+      "label": "OMC",
+      "color": "#6B7280",
+      "count": 37,
+      "execution_count": 6
+    },
+    {
+      "id": "config",
+      "label": "Config",
+      "color": "#F59E0B",
+      "count": 3,
+      "execution_count": 4
+    },
+    {
+      "id": "other",
+      "label": "Other",
+      "color": "#9CA0A8",
+      "count": 3,
+      "execution_count": 4
+    },
+    {
+      "id": "communication",
+      "label": "Communication",
+      "color": "#06B6D4",
+      "count": 2,
+      "execution_count": 2
+    },
+    {
+      "id": "design",
+      "label": "Design",
+      "color": "#EC4899",
+      "count": 3,
+      "execution_count": 2
+    },
+    {
+      "id": "coaching",
+      "label": "Coaching",
+      "color": "#8B5CF6",
+      "count": 1,
+      "execution_count": 1
+    },
+    {
+      "id": "pm",
+      "label": "PM",
+      "color": "#F97316",
+      "count": 1,
+      "execution_count": 1
+    },
+    {
+      "id": "dev",
+      "label": "Dev",
+      "color": "#10B981",
+      "count": 1,
+      "execution_count": 0
+    },
+    {
+      "id": "utility",
+      "label": "Utility",
+      "color": "#9CA0A8",
+      "count": 6,
+      "execution_count": 0
+    }
+  ],
+  "skills": [
+    {
+      "name": "session-wrap:wrap",
+      "category": "workflow",
+      "description": "Session wrap-up — analyze, suggest docs, automation, follow-ups",
+      "description_long": "Analyzes the current session to suggest documentation updates, automation opportunities, and follow-up tasks. The primary session-end workflow.",
+      "usage": 14,
+      "status": "active",
+      "source": "plugin:session-wrap",
+      "triggers": [
+        "/wrap",
+        "/session-wrap:wrap",
+        "세션 정리"
+      ],
+      "capabilities": [
+        "session-analysis",
+        "doc-suggestions",
+        "follow-up-generation"
+      ],
+      "related": [
+        "session-wrap:session-wrap",
+        "session-wrap:history-insight"
+      ]
+    },
+    {
+      "name": "meeting",
+      "category": "productivity",
+      "description": "Tiro meeting notes from Notion to Obsidian",
+      "description_long": "Reads Tiro-transcribed meeting notes from Notion, corrects STT errors using glossary, structures the content, collects related note context, and saves to Obsidian.",
+      "usage": 10,
+      "status": "active",
+      "source": "custom",
+      "triggers": [
+        "/meeting",
+        "미팅노트 정리해줘",
+        "회의록"
+      ],
+      "capabilities": [
+        "notion-read",
+        "stt-correction",
+        "obsidian-write",
+        "context-gather"
+      ],
+      "related": [
+        "stt",
+        "context",
+        "memo"
+      ]
+    },
+    {
+      "name": "context",
+      "category": "knowledge",
+      "description": "Load full project context from all knowledge sources",
+      "description_long": "Searches Obsidian vault, Notion workspaces, project memory, and session history to assemble comprehensive context before starting work. Essential for complex tasks requiring cross-source understanding.",
+      "usage": 8,
+      "status": "active",
+      "source": "custom",
+      "triggers": [
+        "/context",
+        "컨텍스트 로드",
+        "프로젝트 배경"
+      ],
+      "capabilities": [
+        "obsidian-search",
+        "notion-search",
+        "memory-read",
+        "session-history"
+      ],
+      "related": [
+        "research",
+        "memo",
+        "wiki-ingest"
+      ]
+    },
+    {
+      "name": "memo",
+      "category": "knowledge",
+      "description": "Quick memo capture to Obsidian Knowledge Vault",
+      "description_long": "Captures quick memos to Obsidian daily notes or inbox. Handles wikilinks, tags, and automatic daily note creation. The most frequently used knowledge capture tool.",
+      "usage": 8,
+      "status": "active",
+      "source": "custom",
+      "triggers": [
+        "/memo",
+        "메모",
+        "기록해줘",
+        "노트해줘"
+      ],
+      "capabilities": [
+        "obsidian-write",
+        "daily-note",
+        "wikilink",
+        "tagging"
+      ],
+      "related": [
+        "context",
+        "research",
+        "wiki-ingest"
+      ]
+    },
+    {
+      "name": "notion-reader",
+      "category": "knowledge",
+      "description": "Read public Notion pages as markdown",
+      "description_long": "Extracts content from public Notion pages using the unofficial API with cursor-based pagination. Converts blocks to clean markdown. Useful for consuming shared documentation and resources.",
+      "usage": 7,
+      "status": "active",
+      "source": "custom",
+      "triggers": [
+        "/notion-reader",
+        "노션 페이지 읽어줘",
+        "notion.site URL"
+      ],
+      "capabilities": [
+        "notion-api",
+        "markdown-extract",
+        "pagination"
+      ],
+      "related": [
+        "notion-extract",
+        "visualize-notion",
+        "context"
+      ]
+    },
+    {
+      "name": "superpowers:brainstorming",
+      "category": "superpowers",
+      "description": "Explore intent, requirements and design before implementation",
+      "description_long": "Must-use skill before any creative work. Explores user intent, gathers requirements, and designs the approach before touching code. Prevents premature implementation.",
+      "usage": 6,
+      "status": "active",
+      "source": "plugin:superpowers",
+      "triggers": [
+        "creative work",
+        "new feature",
+        "build component"
+      ],
+      "capabilities": [
+        "intent-exploration",
+        "requirement-gather",
+        "design-first"
+      ],
+      "related": [
+        "superpowers:writing-plans",
+        "superpowers:subagent-driven-development"
+      ]
+    },
+    {
+      "name": "video-dl",
+      "category": "media",
+      "description": "Download videos from Instagram, YouTube, TikTok, X and more",
+      "description_long": "Downloads videos and images from nearly any platform using yt-dlp with browser cookie authentication. Supports audio-only extraction and custom output paths.",
+      "usage": 5,
+      "status": "active",
+      "source": "custom",
+      "triggers": [
+        "/video-dl",
+        "영상 다운로드",
+        "동영상 저장",
+        "릴스 받아줘"
+      ],
+      "capabilities": [
+        "video-download",
+        "audio-extract",
+        "multi-platform",
+        "cookie-auth"
+      ],
+      "related": [
+        "audio-transcribe"
+      ]
+    },
+    {
+      "name": "audio-transcribe",
+      "category": "media",
+      "description": "Local audio transcription with mlx_whisper + glossary correction",
+      "description_long": "Transcribes m4a/mp3/wav/mp4 audio files locally using mlx_whisper. Automatically applies glossary-based correction and removes Whisper hallucinations.",
+      "usage": 3,
+      "status": "active",
+      "source": "custom",
+      "triggers": [
+        "/audio-transcribe",
+        "오디오 전사",
+        "녹음 텍스트로"
+      ],
+      "capabilities": [
+        "local-transcription",
+        "glossary-correction",
+        "hallucination-removal"
+      ],
+      "related": [
+        "video-dl",
+        "stt",
+        "meeting"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:cancel",
+      "category": "omc",
+      "description": "Cancel any active OMC execution mode",
+      "description_long": "Cancels autopilot, ralph, ultrawork, ultraqa, swarm, ultrapilot, pipeline, or team modes. Use --force to clear all state.",
+      "usage": 3,
+      "status": "active",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/cancel",
+        "stop",
+        "중단"
+      ],
+      "capabilities": [
+        "mode-cancel",
+        "state-clear"
+      ],
+      "related": []
+    },
+    {
+      "name": "update-config",
+      "category": "config",
+      "description": "Configure Claude Code settings.json",
+      "description_long": "Modifies Claude Code harness settings. Handles hooks, automated behaviors, and configuration changes via settings.json.",
+      "usage": 3,
+      "status": "active",
+      "source": "plugin:update-config",
+      "triggers": [
+        "/update-config",
+        "설정 변경"
+      ],
+      "capabilities": [
+        "settings-edit",
+        "hook-config",
+        "behavior-automate"
+      ],
+      "related": [
+        "keybindings-help"
+      ]
+    },
+    {
+      "name": "buddy",
+      "category": "other",
+      "description": "Skill: buddy",
+      "description_long": "Discovered skill: buddy (not in registry)",
+      "usage": 2,
+      "status": "active",
+      "source": "unknown",
+      "triggers": [
+        "/buddy"
+      ],
+      "capabilities": [],
+      "related": []
+    },
+    {
+      "name": "defuddle",
+      "category": "knowledge",
+      "description": "Extract clean readable content from web pages",
+      "description_long": "Strips clutter from web pages and extracts the main readable content as clean markdown. Useful for articles, blog posts, and documentation.",
+      "usage": 2,
+      "status": "active",
+      "source": "plugin:defuddle",
+      "triggers": [
+        "웹 페이지 읽어줘",
+        "URL 내용 추출"
+      ],
+      "capabilities": [
+        "web-extract",
+        "readability",
+        "markdown-convert"
+      ],
+      "related": [
+        "notion-reader",
+        "research"
+      ]
+    },
+    {
+      "name": "kakaotalk",
+      "category": "communication",
+      "description": "KakaoTalk messaging (shorthand)",
+      "description_long": "Shorthand alias for kakaotalk:kakaotalk.",
+      "usage": 2,
+      "status": "active",
+      "source": "plugin:kakaotalk",
+      "triggers": [
+        "카톡"
+      ],
+      "capabilities": [
+        "message-send",
+        "message-read"
+      ],
+      "related": [
+        "kakaotalk:kakaotalk"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:omc-teams",
+      "category": "omc",
+      "description": "CLI-team runtime for claude/codex/gemini workers in tmux",
+      "description_long": "Spawns CLI workers (Claude, Codex, or Gemini) in tmux panes for process-based parallel execution.",
+      "usage": 2,
+      "status": "active",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/omc-teams",
+        "codex",
+        "gemini workers"
+      ],
+      "capabilities": [
+        "tmux-spawn",
+        "multi-model",
+        "parallel-cli"
+      ],
+      "related": [
+        "oh-my-claudecode:ccg",
+        "oh-my-claudecode:team"
+      ]
+    },
+    {
+      "name": "superpowers:subagent-driven-development",
+      "category": "superpowers",
+      "description": "Execute plans with independent parallel sub-agents",
+      "description_long": "Dispatches independent implementation tasks to parallel sub-agents within the current session. Maximizes throughput for non-dependent work.",
+      "usage": 2,
+      "status": "active",
+      "source": "plugin:superpowers",
+      "triggers": [
+        "parallel tasks",
+        "independent implementation"
+      ],
+      "capabilities": [
+        "parallel-dispatch",
+        "task-independence-check",
+        "result-merge"
+      ],
+      "related": [
+        "superpowers:dispatching-parallel-agents",
+        "superpowers:writing-plans"
+      ]
+    },
+    {
+      "name": "superpowers:systematic-debugging",
+      "category": "superpowers",
+      "description": "Root-cause analysis before proposing fixes",
+      "description_long": "Systematic debugging approach: reproduce, isolate, hypothesize, verify. Prevents shotgun debugging by requiring evidence-based diagnosis.",
+      "usage": 2,
+      "status": "active",
+      "source": "plugin:superpowers",
+      "triggers": [
+        "bug",
+        "test failure",
+        "unexpected behavior"
+      ],
+      "capabilities": [
+        "reproduction",
+        "isolation",
+        "hypothesis-testing",
+        "root-cause"
+      ],
+      "related": [
+        "superpowers:test-driven-development",
+        "superpowers:verification-before-completion"
+      ]
+    },
+    {
+      "name": "superpowers:writing-plans",
+      "category": "superpowers",
+      "description": "Create implementation plans before touching code",
+      "description_long": "Structures multi-step tasks into detailed implementation plans with clear phases, dependencies, and checkpoints.",
+      "usage": 2,
+      "status": "active",
+      "source": "plugin:superpowers",
+      "triggers": [
+        "plan this",
+        "implementation plan",
+        "multi-step task"
+      ],
+      "capabilities": [
+        "task-decomposition",
+        "dependency-mapping",
+        "checkpoint-design"
+      ],
+      "related": [
+        "superpowers:executing-plans",
+        "superpowers:brainstorming"
+      ]
+    },
+    {
+      "name": "autopilot",
+      "category": "other",
+      "description": "Alias for oh-my-claudecode:autopilot",
+      "description_long": "Shorthand alias for oh-my-claudecode:autopilot.",
+      "usage": 1,
+      "status": "active",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/autopilot"
+      ],
+      "capabilities": [
+        "autonomous-execution"
+      ],
+      "related": [
+        "oh-my-claudecode:autopilot"
+      ]
+    },
+    {
+      "name": "coach-changjun",
+      "category": "coaching",
+      "description": "1:1 coaching agent based on Kim Chang-jun methodology",
+      "description_long": "Provides 1:1 coaching using Kim Chang-jun's methodology. Helps think through personal and professional dilemmas with structured questioning.",
+      "usage": 1,
+      "status": "active",
+      "source": "custom",
+      "triggers": [
+        "/coach-changjun",
+        "코칭해줘",
+        "코치",
+        "고민이 있어"
+      ],
+      "capabilities": [
+        "socratic-coaching",
+        "dilemma-analysis",
+        "action-planning"
+      ],
+      "related": []
+    },
+    {
+      "name": "frontend-design",
+      "category": "design",
+      "description": "Production-grade frontend interfaces (shorthand)",
+      "description_long": "Shorthand alias for frontend-design:frontend-design.",
+      "usage": 1,
+      "status": "active",
+      "source": "plugin:frontend-design",
+      "triggers": [
+        "/frontend-design"
+      ],
+      "capabilities": [
+        "html-css-js",
+        "responsive-design"
+      ],
+      "related": [
+        "frontend-design:frontend-design"
+      ]
+    },
+    {
+      "name": "google-calendar:google-calendar",
+      "category": "productivity",
+      "description": "Google Calendar events CRUD",
+      "description_long": "Create, read, update, and delete Google Calendar events. Supports the personal account with Asia/Seoul timezone.",
+      "usage": 1,
+      "status": "active",
+      "source": "plugin:google-calendar",
+      "triggers": [
+        "/google-calendar",
+        "일정 추가",
+        "캘린더",
+        "스케줄"
+      ],
+      "capabilities": [
+        "event-create",
+        "event-read",
+        "event-update",
+        "event-delete"
+      ],
+      "related": [
+        "morning-briefing",
+        "schedule"
+      ]
+    },
+    {
+      "name": "keybindings-help",
+      "category": "config",
+      "description": "Customize keyboard shortcuts and keybindings",
+      "description_long": "Helps customize keyboard shortcuts, rebind keys, add chord bindings, or modify ~/.claude/keybindings.json.",
+      "usage": 1,
+      "status": "active",
+      "source": "plugin:keybindings-help",
+      "triggers": [
+        "/keybindings-help",
+        "rebind keys",
+        "keyboard shortcut"
+      ],
+      "capabilities": [
+        "keybind-edit",
+        "chord-bind",
+        "shortcut-customize"
+      ],
+      "related": [
+        "update-config"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:omc-help",
+      "category": "omc",
+      "description": "Show OMC help and available commands",
+      "description_long": "Displays available OMC commands, agents, tools, and skills with usage examples.",
+      "usage": 1,
+      "status": "active",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/omc-help",
+        "omc help"
+      ],
+      "capabilities": [
+        "help-display",
+        "command-list"
+      ],
+      "related": [
+        "my-tools"
+      ]
+    },
+    {
+      "name": "passes",
+      "category": "other",
+      "description": "Skill: passes",
+      "description_long": "Discovered skill: passes (not in registry)",
+      "usage": 1,
+      "status": "active",
+      "source": "unknown",
+      "triggers": [
+        "/passes"
+      ],
+      "capabilities": [],
+      "related": []
+    },
+    {
+      "name": "pptx-design-styles",
+      "category": "design",
+      "description": "PPTX slides with 30 modern design styles",
+      "description_long": "Creates professional PPTX presentations using 30 modern design styles including Glassmorphism, Neo-Brutalism, Bento Grid, Dark Academia, and more.",
+      "usage": 1,
+      "status": "active",
+      "source": "custom",
+      "triggers": [
+        "/pptx-design-styles",
+        "슬라이드 만들어줘",
+        "발표자료"
+      ],
+      "capabilities": [
+        "pptx-generation",
+        "30-design-styles",
+        "modern-layout"
+      ],
+      "related": [
+        "frontend-design:frontend-design"
+      ]
+    },
+    {
+      "name": "product-psychology-for-vibe-coding",
+      "category": "pm",
+      "description": "Product psychology for UI/UX design — 6P, BMAP, B.I.A.S, Peak-End",
+      "description_long": "Applies product psychology principles to UI/UX design: 6P Storyboard, BMAP behavior model, B.I.A.S framework, Peak-End journey map, and ethical design checks.",
+      "usage": 1,
+      "status": "active",
+      "source": "custom",
+      "triggers": [
+        "사용자 심리",
+        "행동 설계",
+        "전환 최적화",
+        "UX 개선"
+      ],
+      "capabilities": [
+        "6p-storyboard",
+        "bmap",
+        "bias-framework",
+        "peak-end",
+        "ethics-check"
+      ],
+      "related": [
+        "prd",
+        "frontend-design:frontend-design"
+      ]
+    },
+    {
+      "name": "research",
+      "category": "knowledge",
+      "description": "Search across all knowledge sources for context on a topic",
+      "description_long": "Multi-source research across Obsidian, Notion, web, and memory. Synthesizes findings into structured output with citations.",
+      "usage": 1,
+      "status": "active",
+      "source": "custom",
+      "triggers": [
+        "/research",
+        "조사해줘",
+        "리서치",
+        "찾아줘"
+      ],
+      "capabilities": [
+        "multi-source-search",
+        "synthesis",
+        "citation"
+      ],
+      "related": [
+        "context",
+        "memo",
+        "wiki-ingest"
+      ]
+    },
+    {
+      "name": "session-wrap:history-insight",
+      "category": "workflow",
+      "description": "Capture and reference session history for saving or analysis",
+      "description_long": "Access, capture, or reference Claude Code session history. Useful for saving important exchanges, extracting patterns, or auditing past sessions.",
+      "usage": 1,
+      "status": "active",
+      "source": "plugin:session-wrap",
+      "triggers": [
+        "/session-wrap:history-insight",
+        "capture session",
+        "save session history"
+      ],
+      "capabilities": [
+        "history-access",
+        "pattern-extract",
+        "session-audit"
+      ],
+      "related": [
+        "session-wrap:wrap",
+        "session-wrap:session-wrap"
+      ]
+    },
+    {
+      "name": "session-wrap:session-wrap",
+      "category": "workflow",
+      "description": "Full session wrap — document learnings, commit suggestions",
+      "description_long": "Comprehensive session wrap-up that documents learnings, suggests commits, and captures reusable patterns from the current coding session.",
+      "usage": 1,
+      "status": "active",
+      "source": "plugin:session-wrap",
+      "triggers": [
+        "/session-wrap:session-wrap",
+        "wrap up session",
+        "end session"
+      ],
+      "capabilities": [
+        "session-analysis",
+        "commit-suggestions",
+        "learning-capture"
+      ],
+      "related": [
+        "session-wrap:wrap",
+        "session-wrap:history-insight"
+      ]
+    },
+    {
+      "name": "superpowers:using-git-worktrees",
+      "category": "superpowers",
+      "description": "Create isolated git worktrees for feature work",
+      "description_long": "Creates isolated git worktrees with smart directory selection and safety verification. Ideal for starting feature work that needs isolation.",
+      "usage": 1,
+      "status": "active",
+      "source": "plugin:superpowers",
+      "triggers": [
+        "worktree",
+        "isolated branch",
+        "feature isolation"
+      ],
+      "capabilities": [
+        "worktree-create",
+        "directory-select",
+        "safety-verify"
+      ],
+      "related": [
+        "superpowers:finishing-a-development-branch"
+      ]
+    },
+    {
+      "name": "superpowers:writing-skills",
+      "category": "superpowers",
+      "description": "Create or edit skills with deployment verification",
+      "description_long": "Guides creation and editing of Claude Code skills with proper structure, testing, and deployment verification.",
+      "usage": 1,
+      "status": "active",
+      "source": "plugin:superpowers",
+      "triggers": [
+        "create skill",
+        "edit skill",
+        "new skill"
+      ],
+      "capabilities": [
+        "skill-scaffold",
+        "skill-test",
+        "deployment-verify"
+      ],
+      "related": [
+        "oh-my-claudecode:skillify",
+        "oh-my-claudecode:skill"
+      ]
+    },
+    {
+      "name": "wiki-ingest",
+      "category": "knowledge",
+      "description": "Ingest materials into LLM Wiki",
+      "description_long": "Reads source material (lecture notes, articles, meeting notes, PDFs) and integrates key information into the LLM Wiki knowledge base. Updates index and log files.",
+      "usage": 1,
+      "status": "active",
+      "source": "custom",
+      "triggers": [
+        "/wiki-ingest",
+        "위키에 정리해줘",
+        "인제스트",
+        "위키 업데이트"
+      ],
+      "capabilities": [
+        "wiki-write",
+        "index-update",
+        "conflict-detection"
+      ],
+      "related": [
+        "wiki-lint",
+        "context",
+        "memo"
+      ]
+    },
+    {
+      "name": "challenge",
+      "category": "productivity",
+      "description": "Devil's Advocate analysis for decisions and strategies",
+      "description_long": "Critically analyzes strategies, plans, and decisions by identifying dangerous assumptions, failure scenarios, and overlooked perspectives.",
+      "usage": 0,
+      "status": "unused",
+      "source": "custom",
+      "triggers": [
+        "/challenge",
+        "도전해봐",
+        "반박해줘",
+        "위험 분석"
+      ],
+      "capabilities": [
+        "assumption-challenge",
+        "failure-scenario",
+        "blind-spot-detection"
+      ],
+      "related": [
+        "prd",
+        "clarify:unknown"
+      ]
+    },
+    {
+      "name": "clarify:metamedium",
+      "category": "productivity",
+      "description": "Content vs form analysis — optimize what vs change how",
+      "description_long": "Helps decide whether to optimize content (what) or change the form/medium (how). Useful when stuck between improving existing approach vs trying a new format.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:clarify",
+      "triggers": [
+        "내용 vs 형식",
+        "content vs form",
+        "metamedium"
+      ],
+      "capabilities": [
+        "content-form-analysis",
+        "medium-evaluation"
+      ],
+      "related": [
+        "clarify:vague",
+        "superpowers:brainstorming"
+      ]
+    },
+    {
+      "name": "clarify:unknown",
+      "category": "productivity",
+      "description": "Surface hidden assumptions with Known/Unknown 4-quadrant framework",
+      "description_long": "Applies the Known/Unknown 4-quadrant framework to surface blind spots and hidden assumptions in strategies, plans, or decisions.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:clarify",
+      "triggers": [
+        "known unknown",
+        "4분면 분석",
+        "blind spots"
+      ],
+      "capabilities": [
+        "quadrant-analysis",
+        "assumption-surface",
+        "blind-spot-detect"
+      ],
+      "related": [
+        "clarify:vague",
+        "challenge"
+      ]
+    },
+    {
+      "name": "clarify:vague",
+      "category": "productivity",
+      "description": "Iterative questioning to clarify ambiguous requirements",
+      "description_long": "When requirements are ambiguous, uses iterative questioning to make them actionable. Refines until the requirement is implementable.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:clarify",
+      "triggers": [
+        "clarify requirements",
+        "요구사항 명확히",
+        "요구사항 정리"
+      ],
+      "capabilities": [
+        "iterative-questioning",
+        "requirement-refinement"
+      ],
+      "related": [
+        "clarify:unknown",
+        "clarify:metamedium",
+        "prd"
+      ]
+    },
+    {
+      "name": "claude-api",
+      "category": "dev",
+      "description": "Build apps with Claude API or Anthropic SDK",
+      "description_long": "Assists in building applications using the Claude API, Anthropic SDK, or Agent SDK. Triggered when code imports anthropic or @anthropic-ai/sdk.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:claude-api",
+      "triggers": [
+        "import anthropic",
+        "Claude API",
+        "Anthropic SDK"
+      ],
+      "capabilities": [
+        "api-guide",
+        "sdk-usage",
+        "agent-sdk"
+      ],
+      "related": []
+    },
+    {
+      "name": "crig-concept-learning",
+      "category": "knowledge",
+      "description": "Deep concept understanding via rigging and crystallization",
+      "description_long": "Scaffolds understanding of complex concepts by breaking them into structural components (rigging) and distilling into a seed sentence. Ideal for learning new domains.",
+      "usage": 0,
+      "status": "unused",
+      "source": "custom",
+      "triggers": [
+        "이해하고 싶어",
+        "그려지지 않아",
+        "핵심이 뭐야?",
+        "정리해봐"
+      ],
+      "capabilities": [
+        "concept-rigging",
+        "seed-sentence",
+        "structural-analysis"
+      ],
+      "related": [
+        "research",
+        "context"
+      ]
+    },
+    {
+      "name": "frontend-design:frontend-design",
+      "category": "design",
+      "description": "Production-grade frontend interfaces with high design quality",
+      "description_long": "Creates distinctive, production-grade frontend interfaces that avoid generic AI aesthetics. Generates creative, polished code for web components, pages, and applications.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:frontend-design",
+      "triggers": [
+        "/frontend-design",
+        "프론트엔드 만들어줘",
+        "웹 UI 디자인"
+      ],
+      "capabilities": [
+        "html-css-js",
+        "responsive-design",
+        "creative-layout",
+        "production-grade"
+      ],
+      "related": [
+        "pptx-design-styles",
+        "product-psychology-for-vibe-coding"
+      ]
+    },
+    {
+      "name": "hook-skip-pattern",
+      "category": "config",
+      "description": "Manage session-end-log.sh SKIP_PATTERNS with JSONL testing",
+      "description_long": "Manages SKIP_PATTERNS in session-end-log.sh and tests them against JSONL files for immediate validation.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:hook-skip-pattern",
+      "triggers": [
+        "/hook-skip-pattern"
+      ],
+      "capabilities": [
+        "pattern-manage",
+        "jsonl-test"
+      ],
+      "related": [
+        "update-config"
+      ]
+    },
+    {
+      "name": "interactive-review:review",
+      "category": "workflow",
+      "description": "Interactive markdown review with web UI",
+      "description_long": "Opens a web-based review interface for markdown documents. Supports inline comments and structured feedback.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:interactive-review",
+      "triggers": [
+        "review this",
+        "검토해줘",
+        "피드백"
+      ],
+      "capabilities": [
+        "web-ui",
+        "inline-comments",
+        "structured-feedback"
+      ],
+      "related": [
+        "simplify"
+      ]
+    },
+    {
+      "name": "kakaotalk:kakaotalk",
+      "category": "communication",
+      "description": "Send/read KakaoTalk messages on macOS",
+      "description_long": "Sends and reads KakaoTalk messages using macOS automation. Supports message composition and chat reading.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:kakaotalk",
+      "triggers": [
+        "카톡 보내줘",
+        "카카오톡 메시지",
+        "채팅 읽어줘"
+      ],
+      "capabilities": [
+        "message-send",
+        "message-read",
+        "macos-automation"
+      ],
+      "related": []
+    },
+    {
+      "name": "loop",
+      "category": "utility",
+      "description": "Run a prompt or command on a recurring interval",
+      "description_long": "Executes a prompt or slash command on a recurring interval (e.g., every 5 minutes). Useful for polling, monitoring, or recurring tasks.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:loop",
+      "triggers": [
+        "/loop",
+        "매 N분마다",
+        "recurring"
+      ],
+      "capabilities": [
+        "interval-run",
+        "poll",
+        "monitor"
+      ],
+      "related": [
+        "schedule"
+      ]
+    },
+    {
+      "name": "morning-briefing",
+      "category": "productivity",
+      "description": "Morning briefing from calendar, memory, and recent activity",
+      "description_long": "Generates a comprehensive morning briefing by pulling today's calendar events, recent memory entries, pending tasks, and session activity summary.",
+      "usage": 0,
+      "status": "unused",
+      "source": "custom",
+      "triggers": [
+        "/morning-briefing",
+        "오늘 일정",
+        "모닝 브리핑"
+      ],
+      "capabilities": [
+        "calendar-read",
+        "memory-read",
+        "task-summary",
+        "activity-digest"
+      ],
+      "related": [
+        "google-calendar:google-calendar",
+        "context"
+      ]
+    },
+    {
+      "name": "my-tools",
+      "category": "utility",
+      "description": "Explain installed plugins, skills, and commands",
+      "description_long": "Lists and explains all installed plugins, skills, and commands with usage examples and descriptions.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:my-tools",
+      "triggers": [
+        "/my-tools",
+        "어떤 도구가 있어",
+        "what tools"
+      ],
+      "capabilities": [
+        "tool-list",
+        "usage-explain"
+      ],
+      "related": [
+        "superpowers:using-superpowers"
+      ]
+    },
+    {
+      "name": "notion-extract",
+      "category": "knowledge",
+      "description": "Safe Notion workspace search with field extraction within context limits",
+      "description_long": "Searches Notion workspaces and extracts only core fields to stay within context limits. Safer than raw MCP calls for large databases.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:notion-extract",
+      "triggers": [
+        "노션 검색",
+        "notion extract"
+      ],
+      "capabilities": [
+        "notion-search",
+        "field-extract",
+        "context-safe"
+      ],
+      "related": [
+        "notion-reader",
+        "context"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:ai-slop-cleaner",
+      "category": "omc",
+      "description": "Clean AI-generated code slop with deletion-first workflow",
+      "description_long": "Cleans AI-generated code using regression-safe, deletion-first workflow. Optional reviewer-only mode.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/ai-slop-cleaner"
+      ],
+      "capabilities": [
+        "slop-detect",
+        "deletion-first",
+        "regression-safe"
+      ],
+      "related": [
+        "simplify"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:ask",
+      "category": "omc",
+      "description": "Process-first advisor routing for Claude, Codex, or Gemini",
+      "description_long": "Routes questions to Claude, Codex, or Gemini via /ask with artifact capture. No raw CLI assembly needed.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/ask",
+        "ask codex",
+        "ask gemini"
+      ],
+      "capabilities": [
+        "model-routing",
+        "artifact-capture"
+      ],
+      "related": [
+        "oh-my-claudecode:ccg"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:autopilot",
+      "category": "omc",
+      "description": "Full autonomous execution from idea to working code",
+      "description_long": "End-to-end autonomous execution: plan, implement, test, verify. Takes an idea and delivers working code.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/autopilot",
+        "autopilot",
+        "build me"
+      ],
+      "capabilities": [
+        "plan",
+        "implement",
+        "test",
+        "verify",
+        "autonomous"
+      ],
+      "related": [
+        "oh-my-claudecode:ralph",
+        "oh-my-claudecode:ultrawork"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:ccg",
+      "category": "omc",
+      "description": "Claude-Codex-Gemini tri-model orchestration",
+      "description_long": "Fans out work to Codex and Gemini via /ask, then Claude synthesizes the results for tri-model consensus.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/ccg",
+        "tri-model",
+        "claude codex gemini"
+      ],
+      "capabilities": [
+        "tri-model",
+        "fan-out",
+        "synthesis"
+      ],
+      "related": [
+        "oh-my-claudecode:omc-teams"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:configure-notifications",
+      "category": "omc",
+      "description": "Configure Telegram, Discord, or Slack notifications",
+      "description_long": "Sets up notification integrations via natural language for Telegram, Discord, or Slack.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "configure discord",
+        "setup telegram",
+        "configure slack"
+      ],
+      "capabilities": [
+        "telegram",
+        "discord",
+        "slack",
+        "notification-config"
+      ],
+      "related": []
+    },
+    {
+      "name": "oh-my-claudecode:debug",
+      "category": "omc",
+      "description": "Diagnose OMC session or repo state",
+      "description_long": "Diagnoses the current OMC session or repository state using logs, traces, state inspection, and focused reproduction.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/debug",
+        "omc debug"
+      ],
+      "capabilities": [
+        "log-inspect",
+        "state-diagnose",
+        "reproduction"
+      ],
+      "related": [
+        "oh-my-claudecode:trace",
+        "oh-my-claudecode:omc-doctor"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:deep-dive",
+      "category": "omc",
+      "description": "Trace + deep-interview pipeline with 3-point injection",
+      "description_long": "2-stage pipeline: causal investigation (trace) followed by requirements crystallization (deep-interview) with 3-point injection.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/deep-dive"
+      ],
+      "capabilities": [
+        "causal-trace",
+        "requirements-crystallize",
+        "3-point-inject"
+      ],
+      "related": [
+        "oh-my-claudecode:trace",
+        "oh-my-claudecode:deep-interview"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:deep-interview",
+      "category": "omc",
+      "description": "Socratic deep interview with ambiguity gating",
+      "description_long": "Socratic deep interview with mathematical ambiguity gating before autonomous execution. Ensures requirements are crystal clear.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/deep-interview"
+      ],
+      "capabilities": [
+        "socratic-interview",
+        "ambiguity-gate",
+        "pre-execution"
+      ],
+      "related": [
+        "oh-my-claudecode:deep-dive",
+        "clarify:vague"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:deepinit",
+      "category": "omc",
+      "description": "Deep codebase init with hierarchical AGENTS.md",
+      "description_long": "Performs deep codebase initialization by generating hierarchical AGENTS.md documentation for the project.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/deepinit",
+        "deepinit"
+      ],
+      "capabilities": [
+        "codebase-scan",
+        "agents-md-generate",
+        "hierarchy-map"
+      ],
+      "related": [
+        "oh-my-claudecode:omc-setup"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:external-context",
+      "category": "omc",
+      "description": "Parallel document-specialist agents for web searches",
+      "description_long": "Invokes parallel document-specialist agents to perform external web searches and documentation lookup.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/external-context",
+        "web search"
+      ],
+      "capabilities": [
+        "parallel-search",
+        "doc-lookup",
+        "web-research"
+      ],
+      "related": [
+        "research",
+        "context"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:hud",
+      "category": "omc",
+      "description": "Configure HUD display options",
+      "description_long": "Configures heads-up display layout, presets, and display elements for the OMC interface.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/hud",
+        "hud config"
+      ],
+      "capabilities": [
+        "hud-layout",
+        "preset-select",
+        "display-config"
+      ],
+      "related": []
+    },
+    {
+      "name": "oh-my-claudecode:learner",
+      "category": "omc",
+      "description": "Extract a learned skill from the current conversation",
+      "description_long": "Identifies a repeatable pattern in the current conversation and extracts it into a reusable skill.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/learner",
+        "learn from this"
+      ],
+      "capabilities": [
+        "pattern-extract",
+        "skill-generate"
+      ],
+      "related": [
+        "oh-my-claudecode:skillify"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:mcp-setup",
+      "category": "omc",
+      "description": "Configure popular MCP servers",
+      "description_long": "Sets up MCP (Model Context Protocol) servers for enhanced agent capabilities.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/mcp-setup",
+        "setup mcp"
+      ],
+      "capabilities": [
+        "mcp-configure",
+        "server-setup"
+      ],
+      "related": [
+        "oh-my-claudecode:omc-setup"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:omc-doctor",
+      "category": "omc",
+      "description": "Diagnose and fix oh-my-claudecode installation issues",
+      "description_long": "Runs diagnostic checks on the OMC installation and provides fixes for common issues.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/omc-doctor",
+        "omc doctor"
+      ],
+      "capabilities": [
+        "diagnostic",
+        "auto-fix",
+        "health-check"
+      ],
+      "related": [
+        "oh-my-claudecode:omc-setup"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:omc-setup",
+      "category": "omc",
+      "description": "Install or refresh oh-my-claudecode",
+      "description_long": "Canonical setup flow for oh-my-claudecode plugin, npm, and local-dev installations.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/omc-setup",
+        "setup omc"
+      ],
+      "capabilities": [
+        "install",
+        "refresh",
+        "configure"
+      ],
+      "related": [
+        "oh-my-claudecode:omc-doctor",
+        "oh-my-claudecode:setup"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:plan",
+      "category": "omc",
+      "description": "Strategic planning with optional interview workflow",
+      "description_long": "Creates strategic execution plans with optional interview-based requirement gathering. Supports --consensus and --review modes.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/plan",
+        "plan this"
+      ],
+      "capabilities": [
+        "strategic-plan",
+        "interview",
+        "consensus-mode"
+      ],
+      "related": [
+        "oh-my-claudecode:ralplan",
+        "superpowers:writing-plans"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:project-session-manager",
+      "category": "omc",
+      "description": "Worktree-first dev environment for issues, PRs, features",
+      "description_long": "Manages development environments using worktree-first approach for issues, PRs, and features with optional tmux sessions.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/project-session-manager"
+      ],
+      "capabilities": [
+        "worktree-manage",
+        "issue-track",
+        "tmux-session"
+      ],
+      "related": [
+        "superpowers:using-git-worktrees"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:ralph",
+      "category": "omc",
+      "description": "Self-referential loop until task completion with verification",
+      "description_long": "Keeps working in a loop until the task is fully completed and verified. Includes ultrawork for maximum parallelism.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/ralph",
+        "ralph",
+        "don't stop",
+        "must complete"
+      ],
+      "capabilities": [
+        "self-loop",
+        "verification",
+        "persistence"
+      ],
+      "related": [
+        "oh-my-claudecode:autopilot",
+        "oh-my-claudecode:ultrawork"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:ralplan",
+      "category": "omc",
+      "description": "Consensus planning with Planner, Architect, Critic iteration",
+      "description_long": "Iterative planning with Planner, Architect, and Critic agents until consensus. Supports --deliberate for high-risk work with pre-mortem and expanded test planning.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/ralplan",
+        "consensus plan"
+      ],
+      "capabilities": [
+        "consensus-plan",
+        "multi-agent-review",
+        "deliberation"
+      ],
+      "related": [
+        "oh-my-claudecode:plan"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:release",
+      "category": "omc",
+      "description": "Automated release workflow for oh-my-claudecode",
+      "description_long": "Handles the release process for oh-my-claudecode including versioning, changelog, and publishing.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/release"
+      ],
+      "capabilities": [
+        "version-bump",
+        "changelog",
+        "publish"
+      ],
+      "related": []
+    },
+    {
+      "name": "oh-my-claudecode:remember",
+      "category": "omc",
+      "description": "Review reusable knowledge and route to appropriate storage",
+      "description_long": "Reviews reusable project knowledge and decides whether it belongs in project memory, notepad, or durable documentation.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/remember"
+      ],
+      "capabilities": [
+        "knowledge-route",
+        "memory-write",
+        "notepad-write"
+      ],
+      "related": [
+        "memo",
+        "context"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:sciomc",
+      "category": "omc",
+      "description": "Parallel scientist agents for comprehensive analysis",
+      "description_long": "Orchestrates parallel scientist agents in AUTO mode for comprehensive data and statistical analysis.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/sciomc",
+        "parallel analysis"
+      ],
+      "capabilities": [
+        "parallel-science",
+        "statistical-analysis",
+        "auto-mode"
+      ],
+      "related": [
+        "oh-my-claudecode:ultrawork"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:self-improve",
+      "category": "omc",
+      "description": "Autonomous evolutionary code improvement with tournament selection",
+      "description_long": "Runs autonomous code improvement iterations using tournament selection to evolve better solutions.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/self-improve"
+      ],
+      "capabilities": [
+        "tournament-select",
+        "evolutionary",
+        "auto-improve"
+      ],
+      "related": [
+        "oh-my-claudecode:autopilot"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:setup",
+      "category": "omc",
+      "description": "Install/update routing for OMC setup flows",
+      "description_long": "Entry point that routes setup, doctor, or MCP requests to the correct OMC setup flow.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/setup"
+      ],
+      "capabilities": [
+        "setup-route",
+        "install",
+        "update"
+      ],
+      "related": [
+        "oh-my-claudecode:omc-setup",
+        "oh-my-claudecode:omc-doctor"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:skill",
+      "category": "omc",
+      "description": "Manage local skills — list, add, remove, search, edit",
+      "description_long": "CRUD operations for local skills including listing, adding, removing, searching, and editing with a setup wizard.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/skill",
+        "manage skills"
+      ],
+      "capabilities": [
+        "skill-crud",
+        "setup-wizard"
+      ],
+      "related": [
+        "oh-my-claudecode:skillify",
+        "superpowers:writing-skills"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:skillify",
+      "category": "omc",
+      "description": "Turn a repeatable workflow into a reusable OMC skill draft",
+      "description_long": "Extracts a repeatable workflow pattern from the current session and generates a reusable OMC skill draft.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/skillify"
+      ],
+      "capabilities": [
+        "workflow-extract",
+        "skill-draft",
+        "template-generate"
+      ],
+      "related": [
+        "oh-my-claudecode:learner",
+        "oh-my-claudecode:skill"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:team",
+      "category": "omc",
+      "description": "N coordinated agents on shared task list",
+      "description_long": "Orchestrates N coordinated Claude Code agents working on a shared task list with stage-aware routing through plan, PRD, exec, verify, and fix stages.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/team",
+        "team",
+        "coordinated team"
+      ],
+      "capabilities": [
+        "multi-agent",
+        "task-list",
+        "stage-routing"
+      ],
+      "related": [
+        "oh-my-claudecode:omc-teams",
+        "oh-my-claudecode:ralph"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:trace",
+      "category": "omc",
+      "description": "Evidence-driven tracing with competing hypotheses",
+      "description_long": "Orchestrates competing tracer hypotheses in team mode for evidence-driven investigation of complex issues.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/trace",
+        "trace this"
+      ],
+      "capabilities": [
+        "hypothesis-compete",
+        "evidence-driven",
+        "team-trace"
+      ],
+      "related": [
+        "oh-my-claudecode:debug",
+        "superpowers:systematic-debugging"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:ultraqa",
+      "category": "omc",
+      "description": "QA cycling — test, verify, fix, repeat until goal met",
+      "description_long": "Iterative QA workflow that runs tests, verifies results, fixes issues, and repeats until the quality goal is met.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/ultraqa",
+        "qa cycle"
+      ],
+      "capabilities": [
+        "test-cycle",
+        "auto-fix",
+        "goal-verify"
+      ],
+      "related": [
+        "oh-my-claudecode:verify"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:ultrawork",
+      "category": "omc",
+      "description": "Maximum parallelism with parallel agent orchestration",
+      "description_long": "Parallel execution engine for high-throughput task completion. Dispatches work to multiple agents simultaneously.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/ultrawork",
+        "ulw",
+        "ultrawork"
+      ],
+      "capabilities": [
+        "parallel-agents",
+        "high-throughput",
+        "orchestration"
+      ],
+      "related": [
+        "oh-my-claudecode:ralph",
+        "oh-my-claudecode:autopilot"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:verify",
+      "category": "omc",
+      "description": "Verify changes really work before claiming completion",
+      "description_long": "Runs verification checks to confirm that changes actually work before claiming completion. Evidence-based completion gate.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/verify",
+        "verify this"
+      ],
+      "capabilities": [
+        "run-verify",
+        "evidence-gate",
+        "completion-check"
+      ],
+      "related": [
+        "superpowers:verification-before-completion"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:visual-verdict",
+      "category": "omc",
+      "description": "Structured visual QA for screenshot-to-reference comparisons",
+      "description_long": "Provides structured visual QA verdicts when comparing screenshots to reference designs.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/visual-verdict"
+      ],
+      "capabilities": [
+        "screenshot-compare",
+        "visual-qa",
+        "structured-verdict"
+      ],
+      "related": [
+        "oh-my-claudecode:verify"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:wiki",
+      "category": "omc",
+      "description": "LLM Wiki — persistent markdown knowledge base",
+      "description_long": "Manages the LLM Wiki persistent markdown knowledge base that compounds knowledge across sessions (Karpathy model).",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/wiki"
+      ],
+      "capabilities": [
+        "wiki-manage",
+        "knowledge-compound"
+      ],
+      "related": [
+        "wiki-ingest",
+        "wiki-lint"
+      ]
+    },
+    {
+      "name": "oh-my-claudecode:writer-memory",
+      "category": "omc",
+      "description": "Agentic memory for writers — characters, relationships, scenes",
+      "description_long": "Tracks characters, relationships, scenes, and themes for creative writing projects.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:oh-my-claudecode",
+      "triggers": [
+        "/writer-memory"
+      ],
+      "capabilities": [
+        "character-track",
+        "relationship-map",
+        "scene-manage"
+      ],
+      "related": []
+    },
+    {
+      "name": "pdf-to-excel",
+      "category": "utility",
+      "description": "Extract PDF tables to styled Excel files",
+      "description_long": "Extracts tabular data from PDF documents and generates styled Excel files with formatting, hyperlinks, and filters using openpyxl.",
+      "usage": 0,
+      "status": "unused",
+      "source": "custom",
+      "triggers": [
+        "/pdf-to-excel",
+        "PDF 엑셀로 변환",
+        "표 추출"
+      ],
+      "capabilities": [
+        "pdf-parse",
+        "excel-generate",
+        "styling",
+        "hyperlinks"
+      ],
+      "related": []
+    },
+    {
+      "name": "prd",
+      "category": "productivity",
+      "description": "Socratic questioning-based PRD writing workflow",
+      "description_long": "Guides PRD creation through Socratic questioning: asks 5-7 clarifying questions with rationale, gathers answers, challenges with 2-3 follow-ups, then drafts the PRD.",
+      "usage": 0,
+      "status": "unused",
+      "source": "custom",
+      "triggers": [
+        "/prd",
+        "PRD 작성",
+        "기획서"
+      ],
+      "capabilities": [
+        "socratic-questioning",
+        "prd-generation",
+        "multi-perspective-review"
+      ],
+      "related": [
+        "challenge",
+        "product-psychology-for-vibe-coding"
+      ]
+    },
+    {
+      "name": "professor-research",
+      "category": "knowledge",
+      "description": "Research professor/researcher profiles from multiple sources",
+      "description_long": "Investigates professor/researcher profiles using email OSINT, academic databases (DBpia, Scholar, ResearchGate), university faculty pages, and Yes24 author pages.",
+      "usage": 0,
+      "status": "unused",
+      "source": "custom",
+      "triggers": [
+        "/professor-research",
+        "교수 정보 찾아줘",
+        "프로필 조사"
+      ],
+      "capabilities": [
+        "osint",
+        "academic-db-search",
+        "profile-synthesis"
+      ],
+      "related": [
+        "research",
+        "context"
+      ]
+    },
+    {
+      "name": "schedule",
+      "category": "utility",
+      "description": "Scheduled remote agents on cron",
+      "description_long": "Creates, updates, lists, or runs scheduled remote agents (triggers) that execute on a cron schedule.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:schedule",
+      "triggers": [
+        "/schedule",
+        "cron 설정",
+        "scheduled task"
+      ],
+      "capabilities": [
+        "cron-create",
+        "remote-agent",
+        "schedule-manage"
+      ],
+      "related": [
+        "loop"
+      ]
+    },
+    {
+      "name": "session-wrap:session-analyzer",
+      "category": "workflow",
+      "description": "Analyze and verify skill execution in past sessions",
+      "description_long": "Evaluates skill execution correctness by analyzing session logs. Verifies that skills ran as expected and surfaces any anomalies.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:session-wrap",
+      "triggers": [
+        "analyze session",
+        "세션 분석",
+        "스킬 실행 검증"
+      ],
+      "capabilities": [
+        "log-analysis",
+        "execution-verify",
+        "anomaly-detect"
+      ],
+      "related": [
+        "session-wrap:wrap"
+      ]
+    },
+    {
+      "name": "simplify",
+      "category": "utility",
+      "description": "Review changed code for quality and efficiency",
+      "description_long": "Reviews recently changed code for reuse opportunities, quality issues, and efficiency improvements, then fixes problems found.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:simplify",
+      "triggers": [
+        "/simplify",
+        "코드 정리"
+      ],
+      "capabilities": [
+        "code-review",
+        "quality-check",
+        "auto-fix"
+      ],
+      "related": [
+        "oh-my-claudecode:ai-slop-cleaner"
+      ]
+    },
+    {
+      "name": "stt",
+      "category": "productivity",
+      "description": "Correct and structure STT transcripts",
+      "description_long": "Corrects speech-to-text transcription errors using glossary-based matching and structures the output into readable format.",
+      "usage": 0,
+      "status": "unused",
+      "source": "custom",
+      "triggers": [
+        "/stt",
+        "STT 교정",
+        "음성 텍스트 교정"
+      ],
+      "capabilities": [
+        "stt-correction",
+        "glossary-match",
+        "text-structure"
+      ],
+      "related": [
+        "audio-transcribe",
+        "meeting"
+      ]
+    },
+    {
+      "name": "superpowers:dispatching-parallel-agents",
+      "category": "superpowers",
+      "description": "Dispatch 2+ independent tasks to parallel agents",
+      "description_long": "When facing multiple independent tasks without shared state, dispatches them to parallel agents for concurrent execution.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:superpowers",
+      "triggers": [
+        "parallel agents",
+        "concurrent tasks"
+      ],
+      "capabilities": [
+        "agent-dispatch",
+        "independence-verify",
+        "result-collect"
+      ],
+      "related": [
+        "superpowers:subagent-driven-development"
+      ]
+    },
+    {
+      "name": "superpowers:executing-plans",
+      "category": "superpowers",
+      "description": "Execute implementation plans with review checkpoints",
+      "description_long": "Executes written implementation plans in a separate session with built-in review checkpoints at each phase.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:superpowers",
+      "triggers": [
+        "execute plan",
+        "run the plan"
+      ],
+      "capabilities": [
+        "plan-execution",
+        "checkpoint-review",
+        "phase-tracking"
+      ],
+      "related": [
+        "superpowers:writing-plans",
+        "superpowers:subagent-driven-development"
+      ]
+    },
+    {
+      "name": "superpowers:finishing-a-development-branch",
+      "category": "superpowers",
+      "description": "Guide completion of development branch — merge, PR, or cleanup",
+      "description_long": "When implementation is complete and tests pass, presents structured options for integrating work: merge, PR creation, or cleanup.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:superpowers",
+      "triggers": [
+        "branch done",
+        "ready to merge",
+        "finish feature"
+      ],
+      "capabilities": [
+        "merge-guide",
+        "pr-create",
+        "branch-cleanup"
+      ],
+      "related": [
+        "superpowers:using-git-worktrees",
+        "superpowers:requesting-code-review"
+      ]
+    },
+    {
+      "name": "superpowers:receiving-code-review",
+      "category": "superpowers",
+      "description": "Handle code review feedback with technical rigor",
+      "description_long": "Processes code review feedback with verification, not blind agreement. Requires technical rigor before implementing suggestions.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:superpowers",
+      "triggers": [
+        "review feedback",
+        "code review comments"
+      ],
+      "capabilities": [
+        "feedback-analysis",
+        "technical-verify",
+        "selective-implement"
+      ],
+      "related": [
+        "superpowers:requesting-code-review"
+      ]
+    },
+    {
+      "name": "superpowers:requesting-code-review",
+      "category": "superpowers",
+      "description": "Request code review to verify work meets requirements",
+      "description_long": "Triggers code review when completing tasks or before merging. Verifies work meets stated requirements.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:superpowers",
+      "triggers": [
+        "request review",
+        "before merge"
+      ],
+      "capabilities": [
+        "review-request",
+        "requirement-verify"
+      ],
+      "related": [
+        "superpowers:receiving-code-review",
+        "superpowers:verification-before-completion"
+      ]
+    },
+    {
+      "name": "superpowers:test-driven-development",
+      "category": "superpowers",
+      "description": "Write tests before implementation code",
+      "description_long": "Enforces TDD: red (write failing test) -> green (minimal implementation) -> refactor. Ensures test coverage drives development.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:superpowers",
+      "triggers": [
+        "tdd",
+        "test first",
+        "red green"
+      ],
+      "capabilities": [
+        "test-first",
+        "red-green-refactor",
+        "coverage-driven"
+      ],
+      "related": [
+        "superpowers:systematic-debugging",
+        "superpowers:verification-before-completion"
+      ]
+    },
+    {
+      "name": "superpowers:using-superpowers",
+      "category": "superpowers",
+      "description": "Establish how to find and use skills at conversation start",
+      "description_long": "Entry point skill that teaches how to discover and invoke other skills. Must be invoked before any response including clarifying questions.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:superpowers",
+      "triggers": [
+        "start conversation",
+        "skill discovery"
+      ],
+      "capabilities": [
+        "skill-discovery",
+        "skill-routing"
+      ],
+      "related": [
+        "my-tools"
+      ]
+    },
+    {
+      "name": "superpowers:verification-before-completion",
+      "category": "superpowers",
+      "description": "Verify work before claiming completion — evidence first",
+      "description_long": "Must run verification commands and confirm output before making any success claims. Evidence before assertions, always.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:superpowers",
+      "triggers": [
+        "about to commit",
+        "claiming done",
+        "before PR"
+      ],
+      "capabilities": [
+        "verification-run",
+        "evidence-collect",
+        "assertion-gate"
+      ],
+      "related": [
+        "oh-my-claudecode:verify",
+        "superpowers:requesting-code-review"
+      ]
+    },
+    {
+      "name": "visualize-notion",
+      "category": "utility",
+      "description": "Visual transformation of Notion pages",
+      "description_long": "Transforms Notion pages into visually enhanced formats with custom styling and layout.",
+      "usage": 0,
+      "status": "unused",
+      "source": "plugin:visualize-notion",
+      "triggers": [
+        "노션 시각화",
+        "페이지 꾸며줘",
+        "visualize notion"
+      ],
+      "capabilities": [
+        "notion-transform",
+        "visual-enhance",
+        "layout-design"
+      ],
+      "related": [
+        "notion-reader",
+        "frontend-design:frontend-design"
+      ]
+    },
+    {
+      "name": "wiki-lint",
+      "category": "knowledge",
+      "description": "Audit wiki health: conflicts, stale pages, gaps",
+      "description_long": "Checks the LLM Wiki for contradictions, outdated information, orphan pages, missing concepts, and data gaps. Produces actionable fix suggestions.",
+      "usage": 0,
+      "status": "unused",
+      "source": "custom",
+      "triggers": [
+        "/wiki-lint",
+        "위키 점검",
+        "위키 린트",
+        "wiki lint"
+      ],
+      "capabilities": [
+        "conflict-scan",
+        "staleness-check",
+        "orphan-detect",
+        "gap-analysis"
+      ],
+      "related": [
+        "wiki-ingest",
+        "context"
+      ]
+    }
+  ],
+  "recommendations": {
+    "high": [
+      {
+        "name": "crig-concept-learning",
+        "reason": "Unused skill in your top category 'knowledge'. Deep concept understanding via rigging and crystallization"
+      },
+      {
+        "name": "interactive-review:review",
+        "reason": "Unused skill in your top category 'workflow'. Interactive markdown review with web UI"
+      },
+      {
+        "name": "notion-extract",
+        "reason": "Unused skill in your top category 'knowledge'. Safe Notion workspace search with field extraction within context limits"
+      },
+      {
+        "name": "professor-research",
+        "reason": "Unused skill in your top category 'knowledge'. Research professor/researcher profiles from multiple sources"
+      },
+      {
+        "name": "session-wrap:session-analyzer",
+        "reason": "Unused skill in your top category 'workflow'. Analyze and verify skill execution in past sessions"
+      },
+      {
+        "name": "superpowers:dispatching-parallel-agents",
+        "reason": "Unused skill in your top category 'superpowers'. Dispatch 2+ independent tasks to parallel agents"
+      },
+      {
+        "name": "superpowers:executing-plans",
+        "reason": "Unused skill in your top category 'superpowers'. Execute implementation plans with review checkpoints"
+      },
+      {
+        "name": "superpowers:finishing-a-development-branch",
+        "reason": "Unused skill in your top category 'superpowers'. Guide completion of development branch — merge, PR, or cleanup"
+      }
+    ],
+    "medium": [
+      {
+        "name": "challenge",
+        "reason": "Devil's Advocate analysis for decisions and strategies. Category: productivity."
+      },
+      {
+        "name": "clarify:metamedium",
+        "reason": "Content vs form analysis — optimize what vs change how. Category: productivity."
+      },
+      {
+        "name": "clarify:unknown",
+        "reason": "Surface hidden assumptions with Known/Unknown 4-quadrant framework. Category: productivity."
+      },
+      {
+        "name": "clarify:vague",
+        "reason": "Iterative questioning to clarify ambiguous requirements. Category: productivity."
+      },
+      {
+        "name": "claude-api",
+        "reason": "Build apps with Claude API or Anthropic SDK. Category: dev."
+      },
+      {
+        "name": "frontend-design:frontend-design",
+        "reason": "Production-grade frontend interfaces with high design quality. Category: design."
+      },
+      {
+        "name": "hook-skip-pattern",
+        "reason": "Manage session-end-log.sh SKIP_PATTERNS with JSONL testing. Category: config."
+      },
+      {
+        "name": "kakaotalk:kakaotalk",
+        "reason": "Send/read KakaoTalk messages on macOS. Category: communication."
+      }
+    ],
+    "suggested_new": [
+      {
+        "name": "gov-program-research",
+        "description": "Automated government/institutional support program research and archiving",
+        "reason": "Identified in backlog: manual research of 8+ programs took ~1 hour. Automates extraction of program name, eligibility, funding, deadlines, and application URLs into consistent schema.",
+        "predicted_capabilities": [
+          "web-search",
+          "schema-extract",
+          "md-archive",
+          "calendar-deadline"
+        ],
+        "suggested_triggers": [
+          "지원사업 조사해줘",
+          "영진위 프로그램 찾아줘",
+          "gov program research"
+        ],
+        "evidence": [
+          "MEMORY.md backlog item",
+          "2/17 session: 영진위 8+ programs manual research ~1hr"
+        ]
+      },
+      {
+        "name": "notion-to-obsidian-sync",
+        "description": "Automated Notion-to-Obsidian sync combining meeting + notion-reader patterns",
+        "reason": "The meeting and notion-reader skills are both heavily used. A unified sync skill would automate the recurring pattern of pulling Notion content into Obsidian.",
+        "predicted_capabilities": [
+          "notion-read",
+          "obsidian-write",
+          "template-match",
+          "conflict-detect"
+        ],
+        "suggested_triggers": [
+          "노션 싱크",
+          "sync notion",
+          "노션에서 옵시디언으로"
+        ],
+        "evidence": [
+          "meeting skill: 18 uses",
+          "notion-reader skill: 7 uses",
+          "Recurring Notion->Obsidian workflow in CLAUDE.md"
+        ]
+      },
+      {
+        "name": "weekly-class-prep",
+        "description": "Automated weekly class preparation document generation for K-Arts",
+        "reason": "CLAUDE.md defines a detailed Sunday prep protocol that reads all syllabi, extracts assignments, and generates weekly prep documents. Currently manual.",
+        "predicted_capabilities": [
+          "syllabus-read",
+          "assignment-extract",
+          "weekly-doc-generate",
+          "calendar-check"
+        ],
+        "suggested_triggers": [
+          "주간 수업 준비",
+          "이번주 수업",
+          "weekly prep"
+        ],
+        "evidence": [
+          "CLAUDE.md 주간 수업 준비 프로토콜",
+          "9 courses / 18 credits tracked",
+          "과제-트래커.md active use"
+        ]
+      }
+    ]
+  }
+}

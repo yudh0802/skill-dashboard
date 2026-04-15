@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Visual dashboard for Claude Code skill analytics">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <title>Skill Dashboard</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-mono/style.css" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* ========== CSS Variables ========== */
+    :root {
+      --bg-primary: #FFFFFF;
+      --bg-secondary: #F7F8FA;
+      --bg-sidebar: #0A0A1A;
+      --text-primary: #1A1A1A;
+      --text-secondary: #6B6F76;
+      --text-muted: #9CA0A8;
+      --text-inverse: #FFFFFF;
+      --accent: #5E6AD2;
+      --accent-light: #ECEDFB;
+      --border: #E8E9EC;
+
+      /* Category colors */
+      --cat-knowledge: #5E6AD2;
+      --cat-workflow: #E5793A;
+      --cat-productivity: #4EA87E;
+      --cat-superpowers: #D95F8C;
+      --cat-media: #C084FC;
+      --cat-omc: #6B7280;
+      --cat-config: #F59E0B;
+      --cat-design: #EC4899;
+      --cat-communication: #06B6D4;
+      --cat-coaching: #8B5CF6;
+      --cat-pm: #F97316;
+      --cat-utility: #9CA0A8;
+      --cat-dev: #10B981;
+      --cat-other: #9CA0A8;
+    }
+
+    /* ========== Reset & Base ========== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text-primary);
+      background: var(--bg-primary);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ========== Dashboard Layout ========== */
+    .dashboard {
+      display: flex;
+      height: 100vh;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    /* ========== Sidebar ========== */
+    .sidebar {
+      width: 240px;
+      min-width: 240px;
+      background: var(--bg-sidebar);
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      padding: 24px 16px;
+      overflow-y: auto;
+    }
+
+    /* Logo */
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 12px;
+    }
+
+    .sidebar-logo .logo-icon {
+      color: var(--accent);
+      width: 20px;
+      height: 20px;
+    }
+
+    .sidebar-logo span {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-inverse);
+    }
+
+    /* Navigation section */
+    .nav-section {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      padding: 8px 12px;
+      gap: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s ease;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .nav-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-item.active {
+      background: #1E1E33;
+      color: var(--text-inverse);
+      font-weight: 600;
+    }
+
+    .nav-item.active .nav-icon {
+      color: var(--accent);
+    }
+
+    .nav-icon {
+      width: 18px;
+      height: 18px;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    /* Categories section */
+    .categories-section {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .categories-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      padding: 0 12px;
+      margin-bottom: 8px;
+    }
+
+    .cat-item {
+      display: flex;
+      align-items: center;
+      padding: 6px 12px;
+      gap: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s ease;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .cat-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .cat-item.active {
+      background: #1E1E33;
+      color: var(--text-inverse);
+      font-weight: 500;
+    }
+
+    .cat-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .cat-name {
+      flex: 1;
+    }
+
+    .cat-count {
+      font-size: 12px;
+      font-family: 'Geist Mono', monospace;
+      color: var(--text-muted);
+    }
+
+    /* ========== Main Content ========== */
+    .main-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 28px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      background: var(--bg-primary);
+    }
+
+    .main-content h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .main-content p {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    /* ========== Reusable Components ========== */
+
+    /* Badge */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 500;
+      font-family: 'Inter', sans-serif;
+      white-space: nowrap;
+    }
+
+    /* Active: blue tones (accessible for protanopia) */
+    .badge-active {
+      background: rgba(94, 106, 210, 0.12);
+      color: #5E6AD2;
+    }
+
+    /* Unused: orange tones (accessible for protanopia) */
+    .badge-unused {
+      background: rgba(229, 121, 58, 0.12);
+      color: #E5793A;
+    }
+
+    /* Card */
+    .card {
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--bg-primary);
+    }
+
+    /* Card Grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    /* Summary Cards */
+    .summary-cards {
+      display: flex;
+      flex-direction: row;
+      gap: 16px;
+    }
+
+    .summary-card {
+      flex: 1;
+      min-width: 0;
+      padding: 20px;
+      border-radius: 12px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+    }
+
+    .summary-card .label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .summary-card .value {
+      font-size: 28px;
+      font-weight: 700;
+      font-family: 'Geist Mono', monospace;
+      color: var(--text-primary);
+    }
+
+    /* Mono text utility */
+    .mono {
+      font-family: 'Geist Mono', monospace;
+    }
+
+    /* View placeholder */
+    .view-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      min-height: 300px;
+      border-radius: 12px;
+      border: 2px dashed var(--border);
+      color: var(--text-muted);
+    }
+
+    .view-placeholder p {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    /* Scrollbar styling */
+    .sidebar::-webkit-scrollbar,
+    .main-content::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .sidebar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+    }
+
+    .main-content::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .main-content::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px;
+    }
+
+    /* ========== Bar Chart ========== */
+    .bar-row { display:flex; align-items:center; gap:12px; }
+    .bar-label { font-family:'Geist Mono',monospace; font-size:12px; color:var(--text-secondary); width:160px; flex-shrink:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .bar-track { flex:1; height:18px; border-radius:4px; display:flex; }
+    .bar-fill { height:100%; border-radius:4px; transition:width 0.3s; }
+    .bar-value { font-family:'Geist Mono',monospace; font-size:12px; font-weight:600; color:var(--text-primary); width:30px; text-align:right; }
+
+    /* ========== Table ========== */
+    .skill-table { border-radius:12px; overflow:hidden; border:1px solid var(--border); }
+    .table-header { display:flex; padding:12px 20px; background:var(--bg-primary); border-bottom:1px solid var(--border); }
+    .table-row { display:flex; padding:10px 20px; border-bottom:1px solid var(--border); align-items:center; cursor:pointer; transition:background 0.15s; }
+    .table-row:hover { background:var(--bg-secondary); }
+    .table-row:last-child { border-bottom:none; }
+    .th, .td { font-size:12px; }
+    .col-name { width:200px; flex-shrink:0; }
+    .col-cat { width:120px; flex-shrink:0; }
+    .col-desc { flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .col-usage { width:80px; flex-shrink:0; text-align:right; }
+    .col-status { width:80px; flex-shrink:0; text-align:right; }
+
+    /* ========== Search ========== */
+    .search-box { display:flex; align-items:center; gap:8px; padding:8px 12px; border:1px solid var(--border); border-radius:8px; width:300px; background:var(--bg-primary); }
+    .search-box input { border:none; outline:none; font-family:Inter,sans-serif; font-size:13px; flex:1; background:transparent; color:var(--text-primary); }
+    .search-box input::placeholder { color:var(--text-muted); }
+
+    /* ========== Filter Chips ========== */
+    .filter-chips { display:flex; gap:8px; flex-wrap:wrap; }
+    .chip { padding:6px 12px; border-radius:9999px; font-size:12px; cursor:pointer; border:1px solid var(--border); color:var(--text-secondary); transition:all 0.15s; }
+    .chip:hover { border-color:var(--accent); }
+    .chip.active { background:var(--accent); color:white; border-color:var(--accent); }
+
+    /* ========== Skill Detail Sections ========== */
+    .breadcrumb { display:flex; gap:6px; font-size:13px; align-items:center; }
+    .breadcrumb a { color:var(--accent); text-decoration:none; }
+    .breadcrumb span { color:var(--text-muted); }
+    .info-cards { display:flex; gap:16px; }
+    .info-card { flex:1; padding:16px; border-radius:12px; border:1px solid var(--border); display:flex; flex-direction:column; gap:6px; }
+    .cap-item { display:flex; gap:10px; align-items:flex-start; }
+    .cap-icon { width:16px; height:16px; flex-shrink:0; margin-top:2px; }
+    .two-col { display:flex; gap:20px; }
+    .two-col > div { flex:1; }
+    .section-card { padding:20px; border-radius:12px; background:var(--bg-secondary); border:1px solid var(--border); display:flex; flex-direction:column; gap:12px; }
+    .trigger-pill { display:flex; align-items:center; gap:8px; padding:6px 10px; border-radius:6px; background:var(--bg-primary); }
+    .related-row { display:flex; justify-content:space-between; align-items:center; padding:8px 12px; border-radius:8px; background:var(--bg-primary); cursor:pointer; transition:background 0.15s; }
+    .related-row:hover { background:var(--bg-secondary); }
+
+    /* ========== Recommendation Cards ========== */
+    .reco-card { padding:16px; border-radius:12px; display:flex; flex-direction:column; gap:10px; flex:1; background:var(--bg-primary); }
+    .reco-card.high { border:1.5px solid var(--cat-workflow); }
+    .reco-card.medium { border:1px solid var(--border); }
+    .reco-card.suggested { border:1.5px dashed var(--cat-media); }
+    .reason-box { display:flex; gap:6px; padding:6px 10px; border-radius:6px; align-items:flex-start; font-size:11px; }
+    .preview-link { display:flex; justify-content:flex-end; gap:4px; align-items:center; font-size:12px; font-weight:500; color:var(--accent); cursor:pointer; }
+
+    /* ========== Banner ========== */
+    .banner { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; border-radius:12px; gap:12px; }
+    .banner-btn { display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-radius:8px; background:var(--accent); color:white; font-size:13px; font-weight:600; cursor:pointer; border:none; white-space:nowrap; }
+
+    /* ========== Top Bar ========== */
+    .top-bar { display:flex; align-items:center; justify-content:space-between; }
+    .top-bar h1 { font-family:Inter,sans-serif; font-size:22px; font-weight:600; }
+    .top-bar .meta { font-size:13px; color:var(--text-muted); }
+    .count-badge { display:inline-flex; align-items:center; padding:2px 10px; border-radius:9999px; background:var(--accent-light); color:var(--accent); font-size:13px; font-weight:600; font-family:'Geist Mono',monospace; margin-left:8px; }
+
+    /* ========== Card with Title ========== */
+    .titled-card { border-radius:12px; border:1px solid var(--border); overflow:hidden; }
+    .titled-card-header { padding:16px 20px; font-size:14px; font-weight:600; border-bottom:1px solid var(--border); }
+    .titled-card-body { padding:16px 20px; display:flex; flex-direction:column; gap:10px; }
+
+    /* ========== Skill Card (grid) ========== */
+    .skill-card { padding:16px; border-radius:12px; cursor:pointer; transition:background 0.15s, box-shadow 0.15s; display:flex; flex-direction:column; gap:8px; background:var(--bg-primary); }
+    .skill-card:hover { box-shadow:0 2px 8px rgba(0,0,0,0.06); }
+    .skill-card.unused { border:1.5px dashed var(--cat-workflow); }
+    .skill-card.used { border:1px solid var(--border); }
+    .skill-card-top { display:flex; justify-content:space-between; align-items:center; }
+    .skill-card-bottom { display:flex; justify-content:space-between; align-items:center; margin-top:auto; }
+
+    /* ========== Filter Row ========== */
+    .filter-row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+
+    /* ========== Priority Label ========== */
+    .priority-label { display:flex; align-items:center; gap:8px; font-size:14px; font-weight:600; }
+    .priority-sub { font-size:13px; font-weight:400; color:var(--text-muted); margin-left:4px; }
+    .reco-row { display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; }
+
+    /* ========== Scroll Behavior ========== */
+    .main-content { overflow-y: auto; height: 100vh; }
+
+    /* ========== Smooth Transitions ========== */
+    .main-content > * { animation: fadeIn 0.15s ease-in; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ========== Responsive Design ========== */
+    @media (max-width: 1024px) {
+      .card-grid { grid-template-columns: repeat(2, 1fr); }
+      .reco-row { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .dashboard { flex-direction: column; }
+      .sidebar { width: 100%; height: auto; flex-direction: row; overflow-x: auto; padding: 12px; gap: 12px; }
+      .sidebar .categories-section { display: none; }
+      .sidebar nav { flex-direction: row; }
+      .main-content { padding: 16px; }
+      .card-grid { grid-template-columns: 1fr; }
+      .reco-row { grid-template-columns: 1fr; }
+      .summary-cards { flex-direction: column; }
+      .info-cards { flex-direction: column; }
+      .two-col { flex-direction: column; }
+      .filter-chips { flex-wrap: wrap; }
+      .table-row .col-desc { display: none; }
+      .search-box { width: 100%; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ========== Dashboard Shell ========== -->
+  <div class="dashboard">
+
+    <!-- ========== Sidebar ========== -->
+    <aside class="sidebar" id="sidebar">
+
+      <!-- Logo -->
+      <div class="sidebar-logo">
+        <i data-lucide="zap" class="logo-icon"></i>
+        <span>Skill Dashboard</span>
+      </div>
+
+      <!-- Primary Navigation -->
+      <nav class="nav-section" id="nav-section">
+        <a class="nav-item active" href="#overview" data-route="overview">
+          <i data-lucide="layout-dashboard" class="nav-icon"></i>
+          <span>Overview</span>
+        </a>
+        <a class="nav-item" href="#all-skills" data-route="all-skills">
+          <i data-lucide="list" class="nav-icon"></i>
+          <span>All Skills</span>
+        </a>
+        <a class="nav-item" href="#recommendations" data-route="recommendations">
+          <i data-lucide="star" class="nav-icon"></i>
+          <span>Recommendations</span>
+        </a>
+      </nav>
+
+      <!-- Categories -->
+      <div class="categories-section" id="categories-section">
+        <div class="categories-label">Categories</div>
+        <!-- Populated dynamically by updateSidebar() -->
+      </div>
+
+    </aside>
+
+    <!-- ========== Main Content Area ========== -->
+    <main class="main-content" id="main-content">
+      <!-- Views render here via the hash router -->
+    </main>
+
+  </div>
+
+  <!-- ========== JavaScript ========== -->
+  <!--
+    NOTE: This dashboard loads data.json via fetch().
+    Opening index.html directly (file://) will fail due to CORS restrictions.
+    Use a simple local server instead:
+      python3 -m http.server 8000
+      npx serve .
+    Then open http://localhost:8000
+  -->
+  <script>
+    // ==========================================
+    // Global State
+    // ==========================================
+    let DATA = null;
+
+    // ==========================================
+    // Initialization
+    // ==========================================
+    async function init() {
+      try {
+        const resp = await fetch('data.json');
+        DATA = await resp.json();
+      } catch (e) {
+        console.warn('Could not load data.json:', e.message);
+        DATA = { skills: [], categories: {}, suggestions: [] };
+      }
+      updateSidebar();
+      route();
+      lucide.createIcons();
+    }
+
+    // ==========================================
+    // Sidebar: Populate Categories
+    // ==========================================
+    function updateSidebar() {
+      const container = document.getElementById('categories-section');
+      if (!DATA || !DATA.categories) return;
+
+      // Keep the label, clear old items
+      const label = container.querySelector('.categories-label');
+      container.innerHTML = '';
+      container.appendChild(label);
+
+      // categories is an array of {id, label, color, count, execution_count}
+      // Sort by count descending
+      const cats = DATA.categories.slice().sort(function(a, b) {
+        return (b.count || 0) - (a.count || 0);
+      });
+
+      for (var i = 0; i < cats.length; i++) {
+        var cat = cats[i];
+        var item = document.createElement('a');
+        item.className = 'cat-item';
+        item.href = '#all-skills/' + cat.id;
+        item.dataset.category = cat.id;
+
+        var color = cat.color || getCategoryColor(cat.id);
+
+        item.innerHTML =
+          '<span class="cat-dot" style="background:' + color + '"></span>' +
+          '<span class="cat-name">' + (cat.label || cat.id) + '</span>' +
+          '<span class="cat-count">' + (cat.count || 0) + '</span>';
+
+        container.appendChild(item);
+      }
+    }
+
+    // ==========================================
+    // Hash Router
+    // ==========================================
+    function route() {
+      const hash = location.hash.slice(1) || 'overview';
+      const main = document.getElementById('main-content');
+
+      // Clear content
+      main.innerHTML = '';
+
+      // Route to appropriate view
+      if (hash === 'overview') {
+        renderOverview(main);
+      } else if (hash === 'all-skills') {
+        renderAllSkills(main);
+      } else if (hash.startsWith('all-skills/')) {
+        renderAllSkills(main, hash.split('/')[1]);
+      } else if (hash.startsWith('skill/')) {
+        renderSkillDetail(main, decodeURIComponent(hash.slice(6)));
+      } else if (hash === 'recommendations') {
+        renderRecommendations(main);
+      } else if (hash.startsWith('suggested/')) {
+        renderSuggestedPreview(main, decodeURIComponent(hash.slice(10)));
+      } else {
+        // Fallback
+        renderOverview(main);
+      }
+
+      updateActiveNav();
+
+      // Re-render Lucide icons for any newly injected markup
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+    }
+
+    // ==========================================
+    // Active Navigation State
+    // ==========================================
+    function updateActiveNav() {
+      const hash = location.hash.slice(1) || 'overview';
+
+      // Update primary nav items
+      document.querySelectorAll('.nav-item').forEach(function(item) {
+        const itemRoute = item.dataset.route;
+        if (!itemRoute) return;
+
+        if (hash === itemRoute || hash.startsWith(itemRoute + '/')) {
+          item.classList.add('active');
+        } else if (itemRoute === 'all-skills' && hash.startsWith('skill/')) {
+          // Skill detail is under All Skills
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+
+      // Update category items
+      document.querySelectorAll('.cat-item').forEach(function(item) {
+        const cat = item.dataset.category;
+        if (hash === 'all-skills/' + cat) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+    }
+
+    // ==========================================
+    // View Stubs (to be implemented in Tasks 3-7)
+    // ==========================================
+
+    // ==========================================
+    // Data Helpers
+    // ==========================================
+
+    /** Find a category object by id */
+    function findCategory(catId) {
+      if (!DATA || !DATA.categories) return null;
+      for (var i = 0; i < DATA.categories.length; i++) {
+        if (DATA.categories[i].id === catId) return DATA.categories[i];
+      }
+      return null;
+    }
+
+    /** Get category label by id */
+    function getCategoryLabel(catId) {
+      var cat = findCategory(catId);
+      return cat ? cat.label : catId;
+    }
+
+    /** Find a skill by name */
+    function findSkill(name) {
+      if (!DATA || !DATA.skills) return null;
+      for (var i = 0; i < DATA.skills.length; i++) {
+        if (DATA.skills[i].name === name) return DATA.skills[i];
+      }
+      return null;
+    }
+
+    /** Get rank of a skill by usage (1-indexed) */
+    function getSkillRank(skillName) {
+      var sorted = DATA.skills.slice().sort(function(a, b) { return b.usage - a.usage; });
+      for (var i = 0; i < sorted.length; i++) {
+        if (sorted[i].name === skillName) return i + 1;
+      }
+      return DATA.skills.length;
+    }
+
+    /** Map capability to a Lucide icon name */
+    function capabilityIcon(cap) {
+      var map = {
+        'session-analysis': 'file-text',
+        'doc-suggestions': 'file-text',
+        'follow-up-generation': 'list-checks',
+        'notion-read': 'book-open',
+        'stt-correction': 'repeat',
+        'obsidian-write': 'file-text',
+        'obsidian-search': 'search',
+        'notion-search': 'search',
+        'context-gather': 'brain',
+        'memory-read': 'brain',
+        'session-history': 'clock',
+        'daily-note': 'calendar',
+        'wikilink': 'link',
+        'tagging': 'tag',
+        'notion-api': 'globe',
+        'markdown-extract': 'file-text',
+        'pagination': 'repeat',
+        'intent-exploration': 'brain',
+        'requirement-gather': 'list-checks',
+        'design-first': 'shield-check',
+        'video-download': 'download',
+        'audio-extract': 'music',
+        'multi-platform': 'globe',
+        'cookie-auth': 'shield-check',
+        'local-transcription': 'mic',
+        'glossary-correction': 'spell-check',
+        'hallucination-removal': 'shield-check',
+        'mode-cancel': 'x-circle',
+        'state-clear': 'trash-2',
+        'settings-edit': 'settings',
+        'hook-config': 'settings',
+        'web-extract': 'globe',
+        'readability': 'book-open',
+        'markdown-convert': 'file-text',
+        'message-send': 'send',
+        'message-read': 'mail',
+        'tmux-spawn': 'terminal',
+        'multi-model': 'cpu',
+        'parallel-dispatch': 'git-branch',
+        'task-independence-check': 'shield-check',
+        'result-merge': 'git-merge',
+        'reproduction': 'repeat',
+        'isolation': 'target',
+        'hypothesis-testing': 'beaker',
+        'root-cause': 'search',
+        'task-decomposition': 'list-checks',
+        'dependency-mapping': 'git-branch',
+        'checkpoint-design': 'flag',
+        'web-search': 'search',
+        'schema-extract': 'database',
+        'md-archive': 'archive',
+        'calendar-deadline': 'calendar',
+        'template-match': 'copy',
+        'conflict-detect': 'alert-triangle',
+        'syllabus-read': 'book-open',
+        'assignment-extract': 'list-checks',
+        'weekly-doc-generate': 'file-text',
+        'calendar-check': 'calendar'
+      };
+      return map[cap] || 'zap';
+    }
+
+    /** Format a date string for display */
+    function formatDate(dateStr) {
+      if (!dateStr) return 'N/A';
+      var d = new Date(dateStr);
+      var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      return months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+    }
+
+    /** Escape HTML */
+    function esc(str) {
+      if (!str) return '';
+      return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    // ==========================================
+    // View 1: Overview
+    // ==========================================
+    function renderOverview(el) {
+      var s = DATA.summary;
+      var pct = s.total_skills > 0 ? Math.round(s.used_count / s.total_skills * 100) : 0;
+
+      var html = '';
+
+      // Top bar
+      html += '<div class="top-bar">';
+      html += '<h1>Overview</h1>';
+      html += '<span class="meta">Updated ' + formatDate(DATA.generated) + '</span>';
+      html += '</div>';
+
+      // Summary cards
+      html += '<div class="summary-cards">';
+      // Card 1: Total Skills
+      html += '<div class="summary-card">';
+      html += '<div style="font-size:12px;color:var(--text-muted)">Total Skills</div>';
+      html += '<div style="font-family:\'Geist Mono\',monospace;font-size:32px;font-weight:700">' + s.total_skills + '</div>';
+      html += '<div style="font-size:12px;color:var(--text-muted)">registered</div>';
+      html += '</div>';
+      // Card 2: Used This Month
+      html += '<div class="summary-card">';
+      html += '<div style="font-size:12px;color:var(--text-muted)">Used This Month</div>';
+      html += '<div style="font-family:\'Geist Mono\',monospace;font-size:32px;font-weight:700;color:var(--accent)">' + s.used_count + '</div>';
+      html += '<div style="font-size:12px;color:var(--text-muted)">' + pct + '% utilization</div>';
+      html += '</div>';
+      // Card 3: Executions
+      html += '<div class="summary-card">';
+      html += '<div style="font-size:12px;color:var(--text-muted)">Executions</div>';
+      html += '<div style="font-family:\'Geist Mono\',monospace;font-size:32px;font-weight:700">' + s.total_executions + '</div>';
+      html += '<div style="font-size:12px;color:var(--text-muted)">in last ' + DATA.period_days + ' days</div>';
+      html += '</div>';
+      // Card 4: Most Used
+      html += '<div class="summary-card">';
+      html += '<div style="font-size:12px;color:var(--text-muted)">Most Used</div>';
+      html += '<div style="font-family:\'Geist Mono\',monospace;font-size:18px;font-weight:600">' + esc(s.top_skill.name) + '</div>';
+      html += '<div style="font-size:12px;color:var(--cat-workflow)">' + s.top_skill.count + ' executions</div>';
+      html += '</div>';
+      html += '</div>';
+
+      // Top Skills bar chart
+      var topSkills = DATA.skills.filter(function(sk) { return sk.usage > 0; }).sort(function(a, b) { return b.usage - a.usage; }).slice(0, 10);
+      var maxUsage = topSkills.length > 0 ? topSkills[0].usage : 1;
+
+      html += '<div class="titled-card">';
+      html += '<div class="titled-card-header">Top Skills</div>';
+      html += '<div class="titled-card-body">';
+      for (var i = 0; i < topSkills.length; i++) {
+        var sk = topSkills[i];
+        var catColor = getCategoryColor(sk.category);
+        var pctWidth = Math.round(sk.usage / maxUsage * 100);
+        html += '<div class="bar-row">';
+        html += '<span class="bar-label" title="' + esc(sk.name) + '">' + esc(sk.name) + '</span>';
+        html += '<div class="bar-track" style="background:' + catColor + '15">';
+        html += '<div class="bar-fill" style="width:' + pctWidth + '%;background:' + catColor + '"></div>';
+        html += '</div>';
+        html += '<span class="bar-value">' + sk.usage + '</span>';
+        html += '</div>';
+      }
+      html += '</div></div>';
+
+      // Skills table (top 10)
+      html += '<div class="titled-card">';
+      html += '<div class="titled-card-header">Skills</div>';
+      html += '<div class="skill-table" style="border:none;border-radius:0">';
+      html += '<div class="table-header">';
+      html += '<span class="th col-name" style="font-size:12px;font-weight:600;color:var(--text-muted)">Skill</span>';
+      html += '<span class="th col-cat" style="font-size:12px;font-weight:600;color:var(--text-muted)">Category</span>';
+      html += '<span class="th col-desc" style="font-size:12px;font-weight:600;color:var(--text-muted)">Description</span>';
+      html += '<span class="th col-usage" style="font-size:12px;font-weight:600;color:var(--text-muted)">Usage</span>';
+      html += '<span class="th col-status" style="font-size:12px;font-weight:600;color:var(--text-muted)">Status</span>';
+      html += '</div>';
+      var tableSkills = DATA.skills.slice(0, 10);
+      for (var j = 0; j < tableSkills.length; j++) {
+        var ts = tableSkills[j];
+        html += '<div class="table-row" onclick="location.hash=\'#skill/' + encodeURIComponent(ts.name) + '\'">';
+        html += '<span class="td col-name" style="font-family:\'Geist Mono\',monospace;font-size:13px">' + esc(ts.name) + '</span>';
+        html += '<span class="td col-cat">' + categoryBadge(ts.category, getCategoryLabel(ts.category)) + '</span>';
+        html += '<span class="td col-desc" style="font-size:13px;color:var(--text-secondary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + esc(ts.description) + '</span>';
+        html += '<span class="td col-usage" style="font-family:\'Geist Mono\',monospace;font-size:13px;font-weight:700">' + ts.usage + '</span>';
+        html += '<span class="td col-status">' + statusBadge(ts.status) + '</span>';
+        html += '</div>';
+      }
+      html += '</div></div>';
+
+      el.innerHTML = html;
+      lucide.createIcons();
+    }
+
+    // ==========================================
+    // View 2: All Skills
+    // ==========================================
+    function renderAllSkills(el, category) {
+      var allSkills = DATA.skills;
+      var filteredCat = category || null;
+      var catLabel = filteredCat ? getCategoryLabel(filteredCat) : null;
+
+      // Build the full HTML shell
+      var html = '';
+
+      // Top bar
+      html += '<div class="top-bar">';
+      if (filteredCat) {
+        html += '<h1>All Skills / <span style="color:var(--accent)">' + esc(catLabel) + '</span>';
+      } else {
+        html += '<h1>All Skills';
+      }
+      var initCount = filteredCat
+        ? allSkills.filter(function(s) { return s.category === filteredCat; }).length
+        : allSkills.length;
+      html += '<span class="count-badge">' + initCount + '</span></h1>';
+      html += '</div>';
+
+      // Filter row
+      html += '<div class="filter-row">';
+      html += '<div class="search-box"><i data-lucide="search" style="width:16px;height:16px;color:var(--text-muted)"></i><input id="skill-search" type="text" placeholder="Search skills..."></div>';
+      html += '<div class="filter-chips" id="filter-chips">';
+      html += '<span class="chip' + (!filteredCat ? ' active' : '') + '" data-cat=""  onclick="location.hash=\'#all-skills\'">All</span>';
+      for (var ci = 0; ci < DATA.categories.length; ci++) {
+        var c = DATA.categories[ci];
+        var isActive = filteredCat === c.id;
+        html += '<span class="chip' + (isActive ? ' active' : '') + '" data-cat="' + c.id + '" onclick="location.hash=\'#all-skills/' + c.id + '\'">' + esc(c.label) + '</span>';
+      }
+      html += '</div></div>';
+
+      // Grid container
+      html += '<div class="card-grid" id="skills-grid"></div>';
+
+      el.innerHTML = html;
+
+      // Render the grid based on current filter/search
+      function renderGrid(searchTerm) {
+        var skills = allSkills;
+        if (filteredCat) {
+          skills = skills.filter(function(s) { return s.category === filteredCat; });
+        }
+        if (searchTerm) {
+          var q = searchTerm.toLowerCase();
+          skills = skills.filter(function(s) {
+            return s.name.toLowerCase().indexOf(q) !== -1 || s.description.toLowerCase().indexOf(q) !== -1;
+          });
+        }
+
+        // Update count badge
+        var badge = el.querySelector('.count-badge');
+        if (badge) badge.textContent = skills.length;
+
+        var grid = document.getElementById('skills-grid');
+        var g = '';
+        for (var i = 0; i < skills.length; i++) {
+          var sk = skills[i];
+          var isUnused = sk.status !== 'active';
+          g += '<div class="skill-card ' + (isUnused ? 'unused' : 'used') + '" onclick="location.hash=\'#skill/' + encodeURIComponent(sk.name) + '\'">';
+          g += '<div class="skill-card-top">';
+          g += '<span style="font-family:\'Geist Mono\',monospace;font-size:13px;font-weight:700">' + esc(sk.name) + '</span>';
+          g += categoryBadge(sk.category, getCategoryLabel(sk.category));
+          g += '</div>';
+          g += '<div style="font-size:12px;color:var(--text-secondary);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden">' + esc(sk.description) + '</div>';
+          g += '<div class="skill-card-bottom">';
+          if (sk.usage > 0) {
+            g += '<span style="font-family:\'Geist Mono\',monospace;font-size:12px;font-weight:600">' + sk.usage + ' uses</span>';
+          } else {
+            g += '<span style="font-size:12px;color:var(--cat-workflow);font-weight:500">Unused</span>';
+          }
+          g += '<span style="font-size:11px;color:var(--text-muted)">' + esc(sk.source) + '</span>';
+          g += '</div>';
+          g += '</div>';
+        }
+        grid.innerHTML = g;
+      }
+
+      renderGrid('');
+
+      // Search input handler
+      var searchInput = document.getElementById('skill-search');
+      searchInput.addEventListener('input', function() {
+        renderGrid(this.value);
+      });
+
+      lucide.createIcons();
+    }
+
+    // ==========================================
+    // View 3: Skill Detail
+    // ==========================================
+    function renderSkillDetail(el, skillName) {
+      var skill = findSkill(skillName);
+      if (!skill) {
+        el.innerHTML = '<h1>Skill not found</h1><p>Could not find skill: ' + esc(skillName) + '</p>';
+        return;
+      }
+
+      var html = '';
+
+      // Breadcrumb
+      html += '<div class="breadcrumb">';
+      html += '<a href="#all-skills">All Skills</a>';
+      html += '<span>/</span>';
+      html += '<span>' + esc(skill.name) + '</span>';
+      html += '</div>';
+
+      // Header row
+      html += '<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">';
+      html += '<span style="font-family:\'Geist Mono\',monospace;font-size:24px;font-weight:700">' + esc(skill.name) + '</span>';
+      html += categoryBadge(skill.category, getCategoryLabel(skill.category));
+      html += '<span class="badge" style="border:1px solid var(--border);color:var(--text-muted);background:transparent">' + esc(skill.source) + '</span>';
+      html += '</div>';
+
+      // Description
+      var desc = skill.description_long || skill.description;
+      html += '<p style="font-size:15px;color:var(--text-secondary);line-height:1.5">' + esc(desc) + '</p>';
+
+      // What it does
+      if (skill.capabilities && skill.capabilities.length > 0) {
+        html += '<div class="section-card">';
+        html += '<div style="font-size:14px;font-weight:600">What it does</div>';
+        for (var ci = 0; ci < skill.capabilities.length; ci++) {
+          var cap = skill.capabilities[ci];
+          var iconName = capabilityIcon(cap);
+          // Humanize the capability name
+          var capLabel = cap.replace(/-/g, ' ').replace(/\b\w/g, function(l) { return l.toUpperCase(); });
+          html += '<div class="cap-item">';
+          html += '<i data-lucide="' + iconName + '" class="cap-icon" style="color:var(--accent)"></i>';
+          html += '<div>';
+          html += '<div style="font-size:13px;font-weight:600">' + esc(capLabel) + '</div>';
+          html += '</div>';
+          html += '</div>';
+        }
+        html += '</div>';
+      }
+
+      // Info cards
+      var rank = getSkillRank(skill.name);
+      html += '<div class="info-cards">';
+      // Usage
+      html += '<div class="info-card">';
+      html += '<div style="font-size:12px;color:var(--text-muted)">Usage (30d)</div>';
+      html += '<div style="font-family:\'Geist Mono\',monospace;font-size:24px;font-weight:700;color:var(--accent)">' + skill.usage + '</div>';
+      html += '<div style="font-size:12px;color:var(--text-muted)">#' + rank + ' most used</div>';
+      html += '</div>';
+      // Last Used
+      html += '<div class="info-card">';
+      html += '<div style="font-size:12px;color:var(--text-muted)">Last Used</div>';
+      if (skill.usage > 0) {
+        html += '<div style="font-family:\'Geist Mono\',monospace;font-size:24px;font-weight:700">Recent</div>';
+        html += '<div style="font-size:12px;color:var(--text-muted)">Within ' + DATA.period_days + ' days</div>';
+      } else {
+        html += '<div style="font-family:\'Geist Mono\',monospace;font-size:24px;font-weight:700">Never</div>';
+        html += '<div style="font-size:12px;color:var(--text-muted)">Not yet used</div>';
+      }
+      html += '</div>';
+      // Status
+      html += '<div class="info-card">';
+      html += '<div style="font-size:12px;color:var(--text-muted)">Status</div>';
+      var dotColor = skill.status === 'active' ? 'var(--accent)' : 'var(--cat-workflow)';
+      html += '<div style="display:flex;align-items:center;gap:8px">';
+      html += '<span style="width:10px;height:10px;border-radius:50%;background:' + dotColor + ';display:inline-block"></span>';
+      html += '<span style="font-size:20px;font-weight:600">' + (skill.status === 'active' ? 'Active' : 'Unused') + '</span>';
+      html += '</div>';
+      html += '</div>';
+      // Trigger
+      html += '<div class="info-card">';
+      html += '<div style="font-size:12px;color:var(--text-muted)">Trigger</div>';
+      if (skill.triggers && skill.triggers.length > 0) {
+        html += '<div style="font-family:\'Geist Mono\',monospace;font-size:20px">' + esc(skill.triggers[0]) + '</div>';
+        if (skill.triggers.length > 1) {
+          html += '<div style="font-size:12px;color:var(--text-muted)">+' + (skill.triggers.length - 1) + ' more trigger' + (skill.triggers.length > 2 ? 's' : '') + '</div>';
+        }
+      } else {
+        html += '<div style="font-family:\'Geist Mono\',monospace;font-size:20px">—</div>';
+      }
+      html += '</div>';
+      html += '</div>';
+
+      // Two-column bottom
+      html += '<div class="two-col">';
+
+      // Left: Trigger Patterns
+      html += '<div class="section-card">';
+      html += '<div style="font-size:14px;font-weight:600">Trigger Patterns</div>';
+      if (skill.triggers && skill.triggers.length > 0) {
+        for (var ti = 0; ti < skill.triggers.length; ti++) {
+          var trigger = skill.triggers[ti];
+          var trigIcon = trigger.charAt(0) === '/' ? 'terminal' : 'message-square';
+          html += '<div class="trigger-pill">';
+          html += '<i data-lucide="' + trigIcon + '" style="width:14px;height:14px;color:var(--text-muted)"></i>';
+          html += '<span style="font-family:\'Geist Mono\',monospace;font-size:12px">' + esc(trigger) + '</span>';
+          html += '</div>';
+        }
+      } else {
+        html += '<div style="font-size:12px;color:var(--text-muted)">No triggers defined</div>';
+      }
+      html += '</div>';
+
+      // Right: Related Skills
+      html += '<div class="section-card">';
+      html += '<div style="font-size:14px;font-weight:600">Related Skills</div>';
+      if (skill.related && skill.related.length > 0) {
+        for (var ri = 0; ri < skill.related.length; ri++) {
+          var relName = skill.related[ri];
+          var relSkill = findSkill(relName);
+          var relUsage = relSkill ? relSkill.usage : 0;
+          html += '<div class="related-row" onclick="location.hash=\'#skill/' + encodeURIComponent(relName) + '\'">';
+          html += '<span style="font-family:\'Geist Mono\',monospace;font-size:12px">' + esc(relName) + '</span>';
+          html += '<span style="font-family:\'Geist Mono\',monospace;font-size:12px;color:var(--text-muted)">' + relUsage + ' uses</span>';
+          html += '</div>';
+        }
+      } else {
+        html += '<div style="font-size:12px;color:var(--text-muted)">No related skills</div>';
+      }
+      html += '</div>';
+
+      html += '</div>'; // two-col
+
+      el.innerHTML = html;
+      lucide.createIcons();
+    }
+
+    // ==========================================
+    // View 4: Recommendations
+    // ==========================================
+    function renderRecommendations(el) {
+      var reco = DATA.recommendations || {};
+      var highItems = reco.high || [];
+      var mediumItems = reco.medium || [];
+      var suggestedItems = reco.suggested_new || [];
+
+      var html = '';
+
+      // Top bar
+      html += '<div class="top-bar">';
+      html += '<h1>Recommendations</h1>';
+      html += '<span class="meta">Based on your usage patterns</span>';
+      html += '</div>';
+
+      // High Priority
+      if (highItems.length > 0) {
+        html += '<div style="display:flex;flex-direction:column;gap:12px">';
+        html += '<div class="priority-label">';
+        html += '<i data-lucide="arrow-up" style="width:18px;height:18px;color:var(--cat-workflow)"></i>';
+        html += '<span>High Priority</span><span class="priority-sub">— Start using these</span>';
+        html += '</div>';
+        html += '<div class="reco-row">';
+        for (var hi = 0; hi < highItems.length; hi++) {
+          var hItem = highItems[hi];
+          var hSkill = findSkill(hItem.name);
+          html += '<div class="reco-card high" style="min-width:0">';
+          html += '<div style="display:flex;justify-content:space-between;align-items:center">';
+          html += '<span style="font-family:\'Geist Mono\',monospace;font-size:13px;font-weight:700">' + esc(hItem.name) + '</span>';
+          if (hSkill) html += categoryBadge(hSkill.category, getCategoryLabel(hSkill.category));
+          html += '</div>';
+          html += '<div style="font-size:12px;color:var(--text-secondary)">' + esc(hSkill ? hSkill.description : '') + '</div>';
+          html += '<div class="reason-box" style="background:var(--cat-workflow)10">';
+          html += '<i data-lucide="lightbulb" style="width:14px;height:14px;color:var(--cat-workflow);flex-shrink:0;margin-top:1px"></i>';
+          html += '<span style="color:var(--cat-workflow)">' + esc(hItem.reason) + '</span>';
+          html += '</div>';
+          html += '</div>';
+        }
+        html += '</div></div>';
+      }
+
+      // Medium Priority
+      if (mediumItems.length > 0) {
+        html += '<div style="display:flex;flex-direction:column;gap:12px">';
+        html += '<div class="priority-label">';
+        html += '<i data-lucide="circle" style="width:18px;height:18px;color:var(--accent)"></i>';
+        html += '<span>Medium Priority</span><span class="priority-sub">— Nice to have</span>';
+        html += '</div>';
+        html += '<div class="reco-row">';
+        for (var mi = 0; mi < mediumItems.length; mi++) {
+          var mItem = mediumItems[mi];
+          var mSkill = findSkill(mItem.name);
+          html += '<div class="reco-card medium" style="min-width:0">';
+          html += '<div style="display:flex;justify-content:space-between;align-items:center">';
+          html += '<span style="font-family:\'Geist Mono\',monospace;font-size:13px;font-weight:700">' + esc(mItem.name) + '</span>';
+          if (mSkill) html += categoryBadge(mSkill.category, getCategoryLabel(mSkill.category));
+          html += '</div>';
+          html += '<div style="font-size:12px;color:var(--text-secondary)">' + esc(mSkill ? mSkill.description : mItem.reason) + '</div>';
+          html += '</div>';
+        }
+        html += '</div></div>';
+      }
+
+      // AI Suggested
+      if (suggestedItems.length > 0) {
+        html += '<div style="display:flex;flex-direction:column;gap:12px">';
+        html += '<div class="priority-label">';
+        html += '<i data-lucide="sparkles" style="width:18px;height:18px;color:var(--cat-media)"></i>';
+        html += '<span style="color:var(--cat-media)">AI Suggested</span><span class="priority-sub">— New skills you could create</span>';
+        html += '<span style="font-size:12px;color:var(--text-muted);font-weight:400;margin-left:8px">Based on your session patterns</span>';
+        html += '</div>';
+        html += '<div class="reco-row">';
+        for (var si = 0; si < suggestedItems.length; si++) {
+          var sItem = suggestedItems[si];
+          html += '<div class="reco-card suggested" style="min-width:0">';
+          html += '<div style="display:flex;justify-content:space-between;align-items:center">';
+          html += '<span style="font-family:\'Geist Mono\',monospace;font-size:13px;font-weight:700">' + esc(sItem.name) + '</span>';
+          html += '<span class="badge" style="background:var(--cat-media)15;color:var(--cat-media)">New</span>';
+          html += '</div>';
+          html += '<div style="font-size:12px;color:var(--text-secondary)">' + esc(sItem.description) + '</div>';
+          html += '<div class="reason-box" style="background:var(--cat-media)10">';
+          html += '<i data-lucide="lightbulb" style="width:14px;height:14px;color:var(--cat-media);flex-shrink:0;margin-top:1px"></i>';
+          html += '<span style="color:var(--cat-media)">' + esc(sItem.reason) + '</span>';
+          html += '</div>';
+          html += '<div class="preview-link" onclick="event.stopPropagation();location.hash=\'#suggested/' + encodeURIComponent(sItem.name) + '\'">';
+          html += '<span>Preview skill detail</span>';
+          html += '<i data-lucide="arrow-right" style="width:14px;height:14px"></i>';
+          html += '</div>';
+          html += '</div>';
+        }
+        html += '</div></div>';
+      }
+
+      el.innerHTML = html;
+      lucide.createIcons();
+    }
+
+    // ==========================================
+    // View 5: Suggested Preview
+    // ==========================================
+    function renderSuggestedPreview(el, skillName) {
+      var suggested = null;
+      var items = (DATA.recommendations && DATA.recommendations.suggested_new) || [];
+      for (var i = 0; i < items.length; i++) {
+        if (items[i].name === skillName) { suggested = items[i]; break; }
+      }
+      if (!suggested) {
+        el.innerHTML = '<h1>Not found</h1><p>Could not find suggested skill: ' + esc(skillName) + '</p>';
+        return;
+      }
+
+      var html = '';
+
+      // Breadcrumb
+      html += '<div class="breadcrumb">';
+      html += '<a href="#recommendations">Recommendations</a>';
+      html += '<span>/</span>';
+      html += '<span>AI Suggested</span>';
+      html += '<span>/</span>';
+      html += '<span>' + esc(suggested.name) + '</span>';
+      html += '</div>';
+
+      // Banner
+      html += '<div class="banner" style="background:var(--cat-media)10">';
+      html += '<div style="display:flex;align-items:center;gap:8px">';
+      html += '<i data-lucide="sparkles" style="width:18px;height:18px;color:var(--cat-media)"></i>';
+      html += '<span style="font-size:13px;color:var(--cat-media)">This skill doesn\'t exist yet — AI-generated preview</span>';
+      html += '</div>';
+      html += '<button class="banner-btn" onclick="navigator.clipboard.writeText(\'/skillify ' + esc(suggested.name) + '\').then(function(){alert(\'Copied: /skillify ' + esc(suggested.name) + '\')})"><i data-lucide="plus" style="width:14px;height:14px"></i> Create this skill</button>';
+      html += '</div>';
+
+      // Header
+      html += '<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">';
+      html += '<span style="font-family:\'Geist Mono\',monospace;font-size:24px;font-weight:700">' + esc(suggested.name) + '</span>';
+      html += '<span class="badge" style="background:var(--cat-media)15;color:var(--cat-media);display:inline-flex;align-items:center;gap:4px"><i data-lucide="sparkles" style="width:12px;height:12px"></i> AI Suggested</span>';
+      html += '</div>';
+
+      // Description
+      html += '<p style="font-size:15px;color:var(--text-secondary);line-height:1.5">' + esc(suggested.description) + '</p>';
+
+      // Predicted capabilities
+      if (suggested.predicted_capabilities && suggested.predicted_capabilities.length > 0) {
+        html += '<div class="section-card">';
+        html += '<div style="font-size:14px;font-weight:600">Predicted capabilities</div>';
+        for (var ci = 0; ci < suggested.predicted_capabilities.length; ci++) {
+          var cap = suggested.predicted_capabilities[ci];
+          var iconName = capabilityIcon(cap);
+          var capLabel = cap.replace(/-/g, ' ').replace(/\b\w/g, function(l) { return l.toUpperCase(); });
+          html += '<div class="cap-item">';
+          html += '<i data-lucide="' + iconName + '" class="cap-icon" style="color:var(--cat-media)"></i>';
+          html += '<div>';
+          html += '<div style="font-size:13px;font-weight:600">' + esc(capLabel) + '</div>';
+          html += '</div>';
+          html += '</div>';
+        }
+        html += '</div>';
+      }
+
+      // Two-column bottom
+      html += '<div class="two-col">';
+
+      // Left: Suggested triggers
+      html += '<div class="section-card">';
+      html += '<div style="font-size:14px;font-weight:600">Suggested triggers</div>';
+      if (suggested.suggested_triggers && suggested.suggested_triggers.length > 0) {
+        for (var ti = 0; ti < suggested.suggested_triggers.length; ti++) {
+          var trigger = suggested.suggested_triggers[ti];
+          html += '<div class="trigger-pill">';
+          html += '<i data-lucide="message-square" style="width:14px;height:14px;color:var(--text-muted)"></i>';
+          html += '<span style="font-family:\'Geist Mono\',monospace;font-size:12px">' + esc(trigger) + '</span>';
+          html += '</div>';
+        }
+      }
+      html += '</div>';
+
+      // Right: Why this was suggested
+      html += '<div class="section-card">';
+      html += '<div style="font-size:14px;font-weight:600">Why this was suggested</div>';
+      if (suggested.evidence && suggested.evidence.length > 0) {
+        var evidenceIcons = ['timer', 'repeat', 'bookmark'];
+        for (var ei = 0; ei < suggested.evidence.length; ei++) {
+          var ev = suggested.evidence[ei];
+          var evIcon = evidenceIcons[ei % evidenceIcons.length];
+          html += '<div style="display:flex;gap:8px;align-items:flex-start">';
+          html += '<i data-lucide="' + evIcon + '" style="width:14px;height:14px;color:var(--text-muted);flex-shrink:0;margin-top:2px"></i>';
+          html += '<span style="font-size:12px;color:var(--text-secondary)">' + esc(ev) + '</span>';
+          html += '</div>';
+        }
+      }
+      html += '</div>';
+
+      html += '</div>'; // two-col
+
+      el.innerHTML = html;
+      lucide.createIcons();
+    }
+
+    // ==========================================
+    // Helper Functions
+    // ==========================================
+
+    /** Get the CSS variable color for a category ID */
+    function getCategoryColor(catId) {
+      var value = getComputedStyle(document.documentElement)
+        .getPropertyValue('--cat-' + catId).trim();
+      return value || '#9CA0A8';
+    }
+
+    /** Render a colored category badge */
+    function categoryBadge(catId, label) {
+      var color = getCategoryColor(catId);
+      return '<span class="badge" style="background:' + color + '15;color:' + color + '">' + label + '</span>';
+    }
+
+    /**
+     * Render a status badge.
+     * Uses blue/orange instead of green/red for protanopia accessibility.
+     */
+    function statusBadge(status) {
+      if (status === 'active') {
+        return '<span class="badge badge-active">Active</span>';
+      }
+      return '<span class="badge badge-unused">Unused</span>';
+    }
+
+    // ==========================================
+    // Event Listeners
+    // ==========================================
+    window.addEventListener('hashchange', route);
+    window.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
