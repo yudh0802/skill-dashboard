@@ -1102,7 +1102,7 @@
         for (var hi = 0; hi < highItems.length; hi++) {
           var hItem = highItems[hi];
           var hSkill = findSkill(hItem.name);
-          html += '<div class="reco-card high" style="min-width:0">';
+          html += '<div class="reco-card high" style="min-width:0;cursor:pointer" onclick="location.hash=\'#skill/' + encodeURIComponent(hItem.name) + '\'">';
           html += '<div style="display:flex;justify-content:space-between;align-items:center">';
           html += '<span style="font-family:\'Geist Mono\',monospace;font-size:13px;font-weight:700">' + esc(hItem.name) + '</span>';
           if (hSkill) html += categoryBadge(hSkill.category, getCategoryLabel(hSkill.category));
@@ -1128,7 +1128,7 @@
         for (var mi = 0; mi < mediumItems.length; mi++) {
           var mItem = mediumItems[mi];
           var mSkill = findSkill(mItem.name);
-          html += '<div class="reco-card medium" style="min-width:0">';
+          html += '<div class="reco-card medium" style="min-width:0;cursor:pointer" onclick="location.hash=\'#skill/' + encodeURIComponent(mItem.name) + '\'">';
           html += '<div style="display:flex;justify-content:space-between;align-items:center">';
           html += '<span style="font-family:\'Geist Mono\',monospace;font-size:13px;font-weight:700">' + esc(mItem.name) + '</span>';
           if (mSkill) html += categoryBadge(mSkill.category, getCategoryLabel(mSkill.category));
